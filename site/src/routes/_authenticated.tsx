@@ -1,3 +1,4 @@
+import AuthenticatedLayout from "@/components/AuthenticatedLayout";
 import { Button } from "@/components/ui/button";
 import { authClient } from "@/lib/auth-client";
 import { createFileRoute, Outlet, useRouter } from "@tanstack/react-router";
@@ -17,7 +18,7 @@ function RouteComponent() {
   };
 
   return (
-    <div>
+    <AuthenticatedLayout>
       <Button
         variant="destructive"
         onClick={handleLogout}
@@ -26,6 +27,6 @@ function RouteComponent() {
         Log out
       </Button>
       <Outlet />
-    </div>
+    </AuthenticatedLayout>
   );
 }
