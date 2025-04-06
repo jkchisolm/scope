@@ -35,9 +35,9 @@ function App() {
     setLoading(false);
     if (res.data && "user" in res.data && res.data.user) {
       console.log("success");
-      // router.navigate({
-      //   to: "/dashboard",
-      // });
+      router.navigate({
+        to: "/dashboard",
+      });
     } else {
       console.error("Login failed");
     }
