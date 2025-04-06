@@ -1,39 +1,56 @@
-import { createFileRoute } from '@tanstack/react-router'
-import logo from '../logo.svg'
+import { createFileRoute, useRouter } from "@tanstack/react-router";
+import logo from "../logo.svg";
+import { GoogleLogin, type CredentialResponse } from "@react-oauth/google";
+import { useState } from "react";
+import { authClient } from "@/lib/auth-client";
 
-export const Route = createFileRoute('/')({
+export const Route = createFileRoute("/")({
   component: App,
-})
+});
 
 function App() {
+  const [loading, setLoading] = useState(false);
+  const router = useRouter();
+
+  const handleSuccess = async (credentialResponse: CredentialResponse) => {
+    setLoading(true);
+    console.log(credentialResponse.credential);
+
+    if (!credentialResponse.credential) {
+      console.error("No credential response");
+      setLoading(false);
+      return;
+    }
+
+    const res = await authClient.signIn.social({
+      provider: "google",
+      idToken: {
+        token: credentialResponse.credential,
+      },
+    });
+
+    console.log(typeof res);
+    console.log(res);
+
+    setLoading(false);
+    if (res.data && "user" in res.data && res.data.user) {
+      console.log("success");
+      // router.navigate({
+      //   to: "/dashboard",
+      // });
+    } else {
+      console.error("Login failed");
+    }
+  };
+
   return (
-    <div className="text-center">
-      <header className="min-h-screen flex flex-col items-center justify-center bg-[#282c34] text-white text-[calc(10px+2vmin)]">
-        <img
-          src={logo}
-          className="h-[40vmin] pointer-events-none animate-[spin_20s_linear_infinite]"
-          alt="logo"
-        />
-        <p>
-          Edit <code>src/routes/index.tsx</code> and save to reload.
-        </p>
-        <a
-          className="text-[#61dafb] hover:underline"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-        <a
-          className="text-[#61dafb] hover:underline"
-          href="https://tanstack.com"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn TanStack
-        </a>
-      </header>
+    <div className="flex flex-col justify-center items-center h-screen">
+      {/* <h1 className="text-7xl">
+        <span className="font-bold text-purple-500">Scopey</span> scope
+      </h1> */}
+      <div className="mt-10">
+        <GoogleLogin onSuccess={handleSuccess} />
+      </div>
     </div>
-  )
+  );
 }

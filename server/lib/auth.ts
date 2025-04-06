@@ -14,4 +14,14 @@ export const auth = betterAuth({
       clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
     },
   },
+  advanced: {
+    defaultCookieAttributes: {
+      secure: true,
+      httpOnly: true,
+      sameSite: "none",
+    },
+  },
+  trustedOrigins: [
+    "http://localhost:3001", // Local development front end origin
+  ],
 });
