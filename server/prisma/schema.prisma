@@ -1,0 +1,122 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Activity {
+  id               String           @id
+  name             String
+  points           Int
+  date             DateTime
+  createdAt        DateTime         @default(now())
+  updatedAt        DateTime
+  teamId           String
+  categoryId       String
+  ActivityCategory ActivityCategory @relation(fields: [categoryId], references: [id])
+  Team             Team             @relation(fields: [teamId], references: [id])
+  ActivityMember   ActivityMember[]
+}
+
+model ActivityCategory {
+  id          String     @id
+  name        String
+  description String
+  points      Int
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime
+  Activity    Activity[]
+}
+
+model ActivityMember {
+  id         String   @id
+  memberId   String
+  activityId String
+  points     Int
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime
+  Activity   Activity @relation(fields: [activityId], references: [id])
+  Member     Member   @relation(fields: [memberId], references: [id])
+}
+
+model Member {
+  id             String           @id
+  name           String
+  email          String?
+  role           Role
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime
+  teamId         String
+  ActivityMember ActivityMember[]
+  Team           Team             @relation(fields: [teamId], references: [id])
+}
+
+model Team {
+  id        String     @id
+  name      String
+  points    Int
+  createdAt DateTime   @default(now())
+  updatedAt DateTime
+  active    Boolean
+  Activity  Activity[]
+  Member    Member[]
+}
+
+model account {
+  id                    String    @id
+  accountId             String
+  providerId            String
+  userId                String
+  accessToken           String?
+  refreshToken          String?
+  idToken               String?
+  accessTokenExpiresAt  DateTime?
+  refreshTokenExpiresAt DateTime?
+  scope                 String?
+  password              String?
+  createdAt             DateTime
+  updatedAt             DateTime
+  user                  user      @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model session {
+  id        String   @id
+  expiresAt DateTime
+  token     String   @unique
+  createdAt DateTime
+  updatedAt DateTime
+  ipAddress String?
+  userAgent String?
+  userId    String
+  user      user     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model user {
+  id            String    @id
+  name          String
+  email         String    @unique
+  emailVerified Boolean
+  image         String?
+  createdAt     DateTime
+  updatedAt     DateTime
+  account       account[]
+  session       session[]
+}
+
+model verification {
+  id         String    @id
+  identifier String
+  value      String
+  expiresAt  DateTime
+  createdAt  DateTime?
+  updatedAt  DateTime?
+}
+
+enum Role {
+  MEMBER
+  EBOARD
+}
