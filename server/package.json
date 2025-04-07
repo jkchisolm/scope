@@ -24,13 +24,18 @@
     "@prisma/client": "6.5.0",
     "@types/cors": "^2.8.17",
     "better-auth": "^1.2.5",
+    "bunyan": "^1.8.15",
     "cors": "^2.8.5",
-    "express": "^5.1.0"
+    "express": "^5.1.0",
+    "express-requests-logger": "^4.0.2",
+    "winston": "^3.17.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.24.0",
     "@tsconfig/node23": "^23.0.1",
+    "@types/bunyan": "^1.8.11",
     "@types/express": "^5.0.1",
+    "@types/express-requests-logger": "^4.0.0",
     "@types/node": "^22.14.0",
     "eslint": "^9.24.0",
     "eslint-plugin-unicorn": "^58.0.0",

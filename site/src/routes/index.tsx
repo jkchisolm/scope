@@ -1,8 +1,7 @@
-import { createFileRoute, useRouter } from "@tanstack/react-router";
-import logo from "../logo.svg";
-import { GoogleLogin, type CredentialResponse } from "@react-oauth/google";
-import { useState } from "react";
 import { authClient } from "@/lib/auth-client";
+import { GoogleLogin, type CredentialResponse } from "@react-oauth/google";
+import { createFileRoute, useRouter } from "@tanstack/react-router";
+import { useState } from "react";
 
 export const Route = createFileRoute("/")({
   component: App,
@@ -49,7 +48,11 @@ function App() {
         <span className="font-bold text-purple-500">Scopey</span> scope
       </h1> */}
       <div className="mt-10">
-        <GoogleLogin onSuccess={handleSuccess} />
+        {loading ? (
+          <div>Loading...</div>
+        ) : (
+          <GoogleLogin onSuccess={handleSuccess} />
+        )}
       </div>
     </div>
   );

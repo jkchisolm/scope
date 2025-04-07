@@ -3,6 +3,9 @@ import express from "express";
 import cors from "cors";
 import { auth } from "../lib/auth";
 import userController from "#user/user.controller.js";
+// var audit = require("express-requests-logger");
+import audit from "express-requests-logger";
+import bunyan from "bunyan";
 const app = express();
 const port = process.env.PORT || 4000;
 
@@ -13,6 +16,15 @@ app.use(
     credentials: true, // Allow credentials (cookies, authorization headers, etc.)
     allowedHeaders: ["Content-Type", "Authorization"], // Specify allowed headers
     exposedHeaders: ["Set-Cookie"], // Specify exposed headers
+  })
+);
+
+app.use(
+  audit({
+    logger: bunyan.createLogger({ name: "Scopey" }),
+    shouldSkipAuditFunc: (req, res) => {
+      return false;
+    },
   })
 );
 

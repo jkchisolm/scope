@@ -3,13 +3,13 @@ import { auth } from "../../lib/auth";
 import { Request } from "express";
 
 const getCurrentUser = async (req: Request) => {
-  console.log(req.headers);
+  // console.log(req.headers);
 
   const session = await auth.api.getSession({
     headers: fromNodeHeaders(req.headers),
   });
 
-  console.log(session);
+  // console.log(session);
 
   return session;
 };
