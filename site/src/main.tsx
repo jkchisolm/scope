@@ -8,11 +8,16 @@ import { routeTree } from "./routeTree.gen";
 import "./styles.css";
 import reportWebVitals from "./reportWebVitals.ts";
 import { GoogleOAuthProvider } from "@react-oauth/google";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import AuthenticatedProvider from "./contexts/AuthenticatedContext.tsx";
+
+// Create a new React Query instance
+const queryClient = new QueryClient();
 
 // Create a new router instance
 const router = createRouter({
   routeTree,
-  context: {},
+  context: { queryClient },
   defaultPreload: "intent",
   scrollRestoration: true,
   defaultStructuralSharing: true,
@@ -33,7 +38,11 @@ if (rootElement && !rootElement.innerHTML) {
   root.render(
     <StrictMode>
       <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
-        <RouterProvider router={router} />
+        <QueryClientProvider client={queryClient}>
+          <AuthenticatedProvider>
+            <RouterProvider router={router} context={{ queryClient }} />
+          </AuthenticatedProvider>
+        </QueryClientProvider>
       </GoogleOAuthProvider>
     </StrictMode>
   );

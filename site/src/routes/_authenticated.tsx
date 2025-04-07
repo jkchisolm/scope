@@ -1,31 +1,34 @@
 import AuthenticatedLayout from "@/components/AuthenticatedLayout";
-import { Button } from "@/components/ui/button";
-import { authClient } from "@/lib/auth-client";
-import { createFileRoute, Outlet, useRouter } from "@tanstack/react-router";
+import {
+  AuthenticatedContext,
+  type AuthenticatedContextType,
+} from "@/contexts/AuthenticatedContext";
+import { UserQueries } from "@/lib/queries/UserQueries";
+import { useSuspenseQuery } from "@tanstack/react-query";
+import { createFileRoute, Outlet } from "@tanstack/react-router";
+import { useContext } from "react";
 
 export const Route = createFileRoute("/_authenticated")({
+  loader: ({ context: { queryClient } }) =>
+    queryClient.prefetchQuery(UserQueries.getCurrentUser),
   component: RouteComponent,
+  pendingComponent: () => <div>Loading...</div>,
+  pendingMs: 200,
 });
 
 function RouteComponent() {
-  const router = useRouter();
+  const { setUserData } = useContext(
+    AuthenticatedContext
+  ) as AuthenticatedContextType;
 
-  const handleLogout = async () => {
-    await authClient.signOut();
-    router.navigate({
-      to: "/",
-    });
-  };
+  const data = useSuspenseQuery(UserQueries.getCurrentUser);
+
+  if (data.data) {
+    setUserData(data.data);
+  }
 
   return (
     <AuthenticatedLayout>
-      <Button
-        variant="destructive"
-        onClick={handleLogout}
-        className="hover:cursor-pointer"
-      >
-        Log out
-      </Button>
       <Outlet />
     </AuthenticatedLayout>
   );

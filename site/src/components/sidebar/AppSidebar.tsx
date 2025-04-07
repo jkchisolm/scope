@@ -7,8 +7,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "../ui/sidebar";
-
-import logo from "../../public/infinity-logo-sash-embroidered.png";
+import NavUser from "./NavUser";
 
 export default function AppSidebar({
   ...props
@@ -23,7 +22,7 @@ export default function AppSidebar({
                 <img
                   src={
                     new URL(
-                      "../../public/infinity-logo-sash-embroidered.png",
+                      "../../../public/infinity-logo-sash-embroidered.png",
                       import.meta.url
                     ).href
                   }
@@ -39,7 +38,9 @@ export default function AppSidebar({
         </SidebarMenu>
       </SidebarHeader>
       <SidebarContent>content</SidebarContent>
-      <SidebarFooter></SidebarFooter>
+      <SidebarFooter>
+        <NavUser />
+      </SidebarFooter>
     </Sidebar>
   );
 }

@@ -38,6 +38,8 @@
     "@radix-ui/react-tooltip": "^1.1.8",
     "@react-oauth/google": "^0.12.1",
     "@tailwindcss/vite": "^4.0.6",
+    "@tanstack/react-query": "^5.71.10",
+    "@tanstack/react-query-devtools": "^5.71.10",
     "@tanstack/react-router": "^1.114.3",
     "@tanstack/react-router-devtools": "^1.114.3",
     "@tanstack/router-plugin": "^1.114.3",
@@ -64,6 +66,7 @@
     "zod": "^3.24.2"
   },
   "devDependencies": {
+    "@tanstack/eslint-plugin-query": "^5.71.5",
     "@testing-library/dom": "^10.4.0",
     "@testing-library/react": "^16.2.0",
     "@types/react": "^19.0.8",
