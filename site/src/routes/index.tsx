@@ -21,6 +21,8 @@ function App() {
       return;
     }
 
+    console.log("sending authclient");
+
     const res = await authClient.signIn.social({
       provider: "google",
       idToken: {

@@ -1,6 +1,4 @@
-import { Outlet } from "@tanstack/react-router";
-import { SidebarInset, SidebarProvider } from "./ui/sidebar";
-import AppSidebar from "./sidebar/AppSidebar";
+import Header from "./Header";
 
 export default function AuthenticatedLayout({
   children,
@@ -8,9 +6,9 @@ export default function AuthenticatedLayout({
   children: React.ReactNode;
 }) {
   return (
-    <SidebarProvider>
-      <AppSidebar variant="inset" />
-      <SidebarInset>{children}</SidebarInset>
-    </SidebarProvider>
+    <div className="flex h-screen w-screen flex-col">
+      <Header />
+      {children}
+    </div>
   );
 }

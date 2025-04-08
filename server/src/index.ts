@@ -19,14 +19,15 @@ app.use(
   })
 );
 
-app.use(
-  audit({
-    logger: bunyan.createLogger({ name: "Scopey" }),
-    shouldSkipAuditFunc: (req, res) => {
-      return false;
-    },
-  })
-);
+// app.use(
+//   audit({
+//     logger: bunyan.createLogger({ name: "Scopey" }),
+//     shouldSkipAuditFunc: (req, res) => {
+//       return false;
+//     },
+//     excludeURLs: ["auth"],
+//   })
+// );
 
 app.all("/api/auth/*splat", toNodeHandler(auth));
 // app.all("/api/auth/sign-in/*splat", toNodeHandler(auth));
