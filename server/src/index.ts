@@ -6,6 +6,7 @@ import userController from "#user/user.controller.js";
 // var audit = require("express-requests-logger");
 import audit from "express-requests-logger";
 import bunyan from "bunyan";
+import teamsController from "#teams/teams.controller.js";
 const app = express();
 const port = process.env.PORT || 4000;
 
@@ -30,17 +31,11 @@ app.use(
 // );
 
 app.all("/api/auth/*splat", toNodeHandler(auth));
-// app.all("/api/auth/sign-in/*splat", toNodeHandler(auth));
-// app.all(/^\/api\/auth\/.*/, toNodeHandler(auth));
 
 app.use(express.json());
 
-app.get("/api/auth", (req, res) => {
-  res.send("Hello World!");
-  console.log("Response sent");
-});
-
 app.use("/api/user", userController);
+app.use("/api/teams", teamsController);
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
