@@ -10,6 +10,7 @@ export interface Team {
   createdAt: string;
   updatedAt: string;
   active: boolean;
+  color: string;
   dailyPoints: { date: string; value: number }[];
   members: Member[];
   activities: Activity[];

@@ -1,4 +1,5 @@
 import { OverviewChart } from "@/components/pages/dashboard/OverviewChart";
+import TeamCards from "@/components/pages/dashboard/TeamCards";
 import type { ChartConfig } from "@/components/ui/chart";
 import { TeamQueries } from "@/lib/queries/TeamQueries";
 import type { Team } from "@/lib/types";
@@ -13,8 +14,6 @@ export const Route = createFileRoute("/_authenticated/dashboard")({
   pendingComponent: () => <div>Loading...</div>,
   pendingMs: 200,
 });
-
-const colors = ["#FF6384", "#36A2EB", "#FFCE56", "#4BC0C0"]; // In the future, this will be team colors. For now, pre-programmed
 
 function RouteComponent() {
   const { data } = useSuspenseQuery(TeamQueries.getAllTeams);
@@ -36,7 +35,7 @@ function RouteComponent() {
   const chartConfig = teams.reduce((config, team, index) => {
     config[team.name] = {
       label: team.name,
-      color: colors[index % colors.length],
+      color: team.color,
     };
     return config;
   }, {} as ChartConfig);
@@ -46,6 +45,15 @@ function RouteComponent() {
   return (
     <div className="p-10 grid grid-cols-2 grid-rows-2 gap-4">
       <OverviewChart chartConfig={chartConfig} dailyPoints={combinedDaily} />
+      <div className="col-span-1 row-span-1 col-start-2 row-start-1 grid grid-cols-2 grid-rows-2 gap-4">
+        <TeamCards
+          teams={teams.map((team) => ({
+            name: team.name,
+            color: team.color,
+            points: team.points,
+          }))}
+        />
+      </div>
     </div>
   );
 }
