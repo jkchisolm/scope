@@ -59,7 +59,6 @@ export const AddTeamDialog = () => {
     };
 
     const response = await fetch(
-      // @ts-ignore
       `${import.meta.env.VITE_SERVER_URL}/api/teams`,
       {
         method: "POST",
