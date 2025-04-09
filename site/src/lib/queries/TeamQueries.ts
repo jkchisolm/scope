@@ -1,4 +1,5 @@
 import { queryOptions } from "@tanstack/react-query";
+import type { Team } from "../types";
 
 const getAllTeams = queryOptions({
   queryKey: ["allTeams"],
@@ -26,7 +27,7 @@ const getSingleTeam = (teamId: string) => {
           },
           credentials: "include", // Include cookies in the request
         }
-      ).then((res) => res.json());
+      ).then((res) => res.json() as unknown as Team);
     },
   });
 };
