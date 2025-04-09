@@ -1,4 +1,5 @@
 import { DataTable } from "@/components/DataTable";
+import { AddActivityDialog } from "@/components/pages/teams/AddActivityDialog";
 import {
   ActivityColumns,
   MemberColumns,
@@ -139,10 +140,7 @@ function RouteComponent() {
             <TabsTrigger value="members">Members</TabsTrigger>
           </TabsList>
           <div className="flex items-center">
-            <Button variant="outline">
-              <PlusCircle />
-              Add Activity
-            </Button>
+            <AddActivityDialog teamId={team.id} />
             <Button variant="outline" className="ml-2">
               <UserPlus />
               Add Member
