@@ -41,7 +41,7 @@ export default function Header() {
   };
 
   return (
-    <header className="flex flex-row justify-between items-center w-full py-5 px-10 border-b-2 ">
+    <header className="flex flex-row justify-between items-center w-full py-5 px-10 border-b-[1px] ">
       <div className="flex flex-row justify-start items-center">
         <img
           src={

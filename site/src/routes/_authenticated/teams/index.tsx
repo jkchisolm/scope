@@ -1,4 +1,4 @@
-import { AddTeamDialog } from "@/components/pages/teampage/AddTeamDialog";
+import { AddTeamDialog } from "@/components/pages/teams/AddTeamDialog";
 import {
   Card,
   CardHeader,

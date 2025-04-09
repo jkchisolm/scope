@@ -1,3 +1,10 @@
+import { DataTable } from "@/components/DataTable";
+import {
+  ActivityColumns,
+  MemberColumns,
+} from "@/components/pages/teams/columns";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -7,15 +14,17 @@ import {
 } from "@/components/ui/card";
 import {
   ChartContainer,
-  ChartTooltip,
-  ChartTooltipContent,
   ChartLegend,
   ChartLegendContent,
+  ChartTooltip,
+  ChartTooltipContent,
 } from "@/components/ui/chart";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { TeamQueries } from "@/lib/queries/TeamQueries";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
-import { CartesianGrid, XAxis, YAxis, Line, AreaChart, Area } from "recharts";
+import { PlusCircle, UserPlus } from "lucide-react";
+import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from "recharts";
 
 export const Route = createFileRoute("/_authenticated/teams/$teamId")({
   component: RouteComponent,
@@ -53,6 +62,13 @@ function RouteComponent() {
       <div className="flex flex-row justify-between items-center w-full">
         <h1 className="text-4xl font-bold">{team.name}</h1>
         <h1 className="text-4xl font-bold">{team.points} points</h1>
+      </div>
+      <div className="flex flex-row gap-2">
+        {team.Member.filter((member) => member.role === "EBOARD").map(
+          (member) => (
+            <Badge variant="outline">{member.name}</Badge>
+          )
+        )}
       </div>
       <Card>
         <CardHeader>
@@ -116,6 +132,30 @@ function RouteComponent() {
           </ChartContainer>
         </CardContent>
       </Card>
+      <Tabs defaultValue="activites" className="w-full">
+        <div className="flex items-center justify-between">
+          <TabsList>
+            <TabsTrigger value="activites">Activities</TabsTrigger>
+            <TabsTrigger value="members">Members</TabsTrigger>
+          </TabsList>
+          <div className="flex items-center">
+            <Button variant="outline">
+              <PlusCircle />
+              Add Activity
+            </Button>
+            <Button variant="outline" className="ml-2">
+              <UserPlus />
+              Add Member
+            </Button>
+          </div>
+        </div>
+        <TabsContent value="activites">
+          <DataTable columns={ActivityColumns} data={team.Activity} />
+        </TabsContent>
+        <TabsContent value="members">
+          <DataTable columns={MemberColumns} data={team.Member} />
+        </TabsContent>
+      </Tabs>
     </div>
   );
 }
