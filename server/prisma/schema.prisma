@@ -9,12 +9,12 @@ datasource db {
 }
 
 model Activity {
-  id               String           @id
+  id               String           @id @default(cuid())
   name             String
   points           Int
   date             DateTime
   createdAt        DateTime         @default(now())
-  updatedAt        DateTime
+  updatedAt        DateTime         @updatedAt
   teamId           String
   categoryId       String
   ActivityCategory ActivityCategory @relation(fields: [categoryId], references: [id])
@@ -23,44 +23,44 @@ model Activity {
 }
 
 model ActivityCategory {
-  id          String     @id
+  id          String     @id @default(cuid())
   name        String
   description String
   points      Int
   createdAt   DateTime   @default(now())
-  updatedAt   DateTime
+  updatedAt   DateTime   @updatedAt
   Activity    Activity[]
 }
 
 model ActivityMember {
-  id         String   @id
+  id         String   @id @default(cuid())
   memberId   String
   activityId String
   points     Int
   createdAt  DateTime @default(now())
-  updatedAt  DateTime
+  updatedAt  DateTime @updatedAt
   Activity   Activity @relation(fields: [activityId], references: [id])
   Member     Member   @relation(fields: [memberId], references: [id])
 }
 
 model Member {
-  id             String           @id
+  id             String           @id @default(cuid())
   name           String
   email          String?
   role           Role
   createdAt      DateTime         @default(now())
-  updatedAt      DateTime
+  updatedAt      DateTime         @updatedAt
   teamId         String
   ActivityMember ActivityMember[]
   Team           Team             @relation(fields: [teamId], references: [id])
 }
 
 model Team {
-  id        String     @id
+  id        String     @id @default(cuid())
   name      String
   points    Int
   createdAt DateTime   @default(now())
-  updatedAt DateTime
+  updatedAt DateTime   @updatedAt
   active    Boolean
   color     String
   Activity  Activity[]

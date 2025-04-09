@@ -17,6 +17,7 @@ export interface Team {
 
 export interface CreateTeamInput {
   name: string;
+  color: string;
   active: boolean;
   members: CreateMemberInput[];
 }

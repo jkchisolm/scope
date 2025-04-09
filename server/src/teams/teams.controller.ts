@@ -7,4 +7,8 @@ teamsController.get("/all", async (req, res) => {
   res.json(await teamsService.getAllTeams());
 });
 
+teamsController.post("/", async (req, res) => {
+  res.json(await teamsService.createTeam(req.body));
+});
+
 export default teamsController;
