@@ -44,7 +44,7 @@ function RouteComponent() {
   console.log("chartConfig", chartConfig);
 
   return (
-    <div className="p-10">
+    <div className="p-10 grid grid-cols-2 grid-rows-2 gap-4">
       <OverviewChart chartConfig={chartConfig} dailyPoints={combinedDaily} />
     </div>
   );

@@ -25,7 +25,7 @@ type Props = {
 
 export const OverviewChart = ({ chartConfig, dailyPoints }: Props) => {
   return (
-    <div className="max-w-1/2">
+    <div className="col-span-1 row-span-1">
       <Card>
         <CardHeader>
           <CardTitle>Team Overview</CardTitle>
