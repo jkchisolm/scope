@@ -35,27 +35,17 @@ const SortedLegend = ({ chartConfig, dailyPoints }: Props) => {
   return (
     <ul className="w-full flex flex-row justify-center gap-4 mt-1">
       {teamKeys.map((teamKey) => (
-        <li
-          key={teamKey}
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: "0.5rem", // Spacing between color box and text
-          }}
-        >
+        <li key={teamKey} className="flex items-center gap-2">
           {/* Color box */}
           <span
+            className="w-[12px] h-[12px] rounded-xs inline-block"
             style={{
-              width: "12px",
-              height: "12px",
               backgroundColor: chartConfig[teamKey].color,
-              display: "inline-block",
-              borderRadius: "2px",
             }}
           />
 
           {/* Team label (you could add finalDayData[teamKey] here if you wish) */}
-          <span style={{ color: "#000" }}>{chartConfig[teamKey].label}</span>
+          <span className="text-black">{chartConfig[teamKey].label}</span>
         </li>
       ))}
     </ul>
@@ -86,27 +76,11 @@ const SortedTooltip: React.FC<{
     : label;
 
   return (
-    <div
-      style={{
-        backgroundColor: "#fff",
-        border: "1px solid #ccc",
-        padding: "0.75rem 1rem",
-        borderRadius: "0.5rem",
-        boxShadow: "0 2px 5px rgba(0,0,0,0.15)",
-      }}
-    >
+    <div className="bg-white border-[0.5px] border-gray-300 rounded-md shadow-xs p-4">
       {/* Date / Title */}
-      <p style={{ margin: 0, fontWeight: "bold", marginBottom: "0.5rem" }}>
-        {dateLabel}
-      </p>
+      <p className="m-0 font-bold mb-2">{dateLabel}</p>
 
-      <ul
-        style={{
-          listStyle: "none",
-          margin: 0,
-          padding: 0,
-        }}
-      >
+      <ul className="m-0 p-0 list-none w-full">
         {sortedPayload.map((item) => {
           const { dataKey, value } = item as {
             dataKey: string;
@@ -123,27 +97,19 @@ const SortedTooltip: React.FC<{
           return (
             <li
               key={dataKey}
-              style={{
-                display: "flex",
-                alignItems: "center",
-                marginBottom: "0.25rem",
-                gap: "0.5rem",
-              }}
+              className="flex items-center justify-between mb-1 gap-2 w-full"
             >
               {/* Color box */}
               <span
+                className="w-3 h-3 inline-block rounded-xs"
                 style={{
-                  width: "12px",
-                  height: "12px",
                   backgroundColor: color,
-                  display: "inline-block",
-                  borderRadius: "2px",
                 }}
               />
               {/* Team name (slightly faded) and bold score */}
-              <span style={{ color: "#666" }}>
+              <span className="w-full" style={{ color: "#666" }}>
                 {labelText}{" "}
-                <span style={{ fontWeight: "bold", color: "#000" }}>
+                <span className="font-bold text-black text-right">
                   {formattedValue}
                 </span>
               </span>
