@@ -8,6 +8,11 @@ teamsController.get("/all", async (req, res) => {
   res.json(await teamsService.getAllTeams());
 });
 
+teamsController.get("/:teamId", async (req, res) => {
+  const { teamId } = req.params;
+  res.json(await teamsService.getTeam(teamId));
+});
+
 teamsController.post("/", async (req, res) => {
   res.json(await teamsService.createTeam(req.body));
 });

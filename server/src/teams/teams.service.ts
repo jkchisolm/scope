@@ -26,6 +26,30 @@ const getAllTeams = async () => {
   return teamsWithDailyPoints;
 };
 
+const getTeam = async (teamId: string) => {
+  const team = await prisma.team.findUnique({
+    where: { id: teamId },
+    include: {
+      Member: true,
+      Activity: true,
+    },
+  });
+
+  if (!team) {
+    throw new Error("Team not found");
+  }
+
+  const dailyPoints = getTeamCumulativePoints({
+    ...team,
+    activities: team.Activity,
+  });
+
+  return {
+    ...team,
+    dailyPoints,
+  };
+};
+
 const createTeam = async (team: CreateTeamInput) => {
   // Create a new team with name and description
   // Create a bunch of members with the information from the input
@@ -66,5 +90,6 @@ const createTeam = async (team: CreateTeamInput) => {
 
 export const teamsService = {
   getAllTeams,
+  getTeam,
   createTeam,
 };
