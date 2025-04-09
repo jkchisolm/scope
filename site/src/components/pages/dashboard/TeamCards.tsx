@@ -1,4 +1,10 @@
-import { Card, CardContent } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import React from "react";
 
 type Props = {
@@ -17,16 +23,24 @@ const TeamCards = (props: Props) => {
   });
 
   return (
-    <>
+    <div
+      className="*:data-[slot=card]:shadow-xs @xl/main:grid-cols-2 @5xl/main:grid-cols-4 
+    grid grid-cols-1 gap-4 px-4 *:data-[slot=card]:from-primary/5 
+    *:data-[slot=card]:to-card dark:*:data-[slot=card]:bg-card lg:px-6"
+    >
       {sortedTeams.map((team) => (
-        <Card style={{ backgroundColor: team.color }} key={team.name}>
-          <CardContent className="flex flex-row justify-center items-center w-full h-full flex flex-col gap-4">
-            <h2 className="text-4xl font-bold">{team.name}</h2>
-            <h3>{team.points}</h3>
-          </CardContent>
+        <Card
+          className="@container/card"
+          key={team.name}
+          style={{ backgroundColor: `${team.color}22` }}
+        >
+          <CardHeader className="relative">
+            <CardTitle>{team.name}</CardTitle>
+            <CardDescription>{team.points} points</CardDescription>
+          </CardHeader>
         </Card>
       ))}
-    </>
+    </div>
   );
 };
 

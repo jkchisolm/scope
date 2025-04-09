@@ -43,16 +43,23 @@ function RouteComponent() {
   console.log("chartConfig", chartConfig);
 
   return (
-    <div className="p-10 grid grid-cols-2 grid-rows-2 gap-4">
-      <OverviewChart chartConfig={chartConfig} dailyPoints={combinedDaily} />
-      <div className="col-span-1 row-span-1 col-start-2 row-start-1 grid grid-cols-2 grid-rows-2 gap-4">
-        <TeamCards
-          teams={teams.map((team) => ({
-            name: team.name,
-            color: team.color,
-            points: team.points,
-          }))}
-        />
+    <div className="flex flex-1 flex-col">
+      <div className="@container/main flex flex-1 flex-col gap-2">
+        <div className="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
+          <TeamCards
+            teams={teams.map((team) => ({
+              name: team.name,
+              color: team.color,
+              points: team.points,
+            }))}
+          />
+        </div>
+        <div className="px-4 lg:px-6">
+          <OverviewChart
+            chartConfig={chartConfig}
+            dailyPoints={combinedDaily}
+          />
+        </div>
       </div>
     </div>
   );
