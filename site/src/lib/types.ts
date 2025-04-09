@@ -12,8 +12,8 @@ export interface Team {
   active: boolean;
   color: string;
   dailyPoints: { date: string; value: number }[];
-  members: Member[];
-  activities: Activity[];
+  Member: Member[];
+  Activity: Activity[];
 }
 
 export interface CreateTeamInput {

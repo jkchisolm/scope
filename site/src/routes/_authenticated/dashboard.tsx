@@ -32,7 +32,7 @@ function RouteComponent() {
 
   // create an object chartConfig
   // four keys with the team na,e and two properties: "label" (teamname) and "color" from the colors array
-  const chartConfig = teams.reduce((config, team, index) => {
+  const chartConfig = teams.reduce((config, team) => {
     config[team.name] = {
       label: team.name,
       color: team.color,

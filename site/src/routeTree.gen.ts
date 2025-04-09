@@ -15,6 +15,8 @@ import { Route as AuthenticatedImport } from './routes/_authenticated'
 import { Route as IndexImport } from './routes/index'
 import { Route as AuthenticatedTeamsImport } from './routes/_authenticated/teams'
 import { Route as AuthenticatedDashboardImport } from './routes/_authenticated/dashboard'
+import { Route as AuthenticatedTeamsIndexImport } from './routes/_authenticated/teams/index'
+import { Route as AuthenticatedTeamsTeamIdImport } from './routes/_authenticated/teams/$teamId'
 
 // Create/Update Routes
 
@@ -39,6 +41,18 @@ const AuthenticatedDashboardRoute = AuthenticatedDashboardImport.update({
   id: '/dashboard',
   path: '/dashboard',
   getParentRoute: () => AuthenticatedRoute,
+} as any)
+
+const AuthenticatedTeamsIndexRoute = AuthenticatedTeamsIndexImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AuthenticatedTeamsRoute,
+} as any)
+
+const AuthenticatedTeamsTeamIdRoute = AuthenticatedTeamsTeamIdImport.update({
+  id: '/$teamId',
+  path: '/$teamId',
+  getParentRoute: () => AuthenticatedTeamsRoute,
 } as any)
 
 // Populate the FileRoutesByPath interface
@@ -73,19 +87,46 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedTeamsImport
       parentRoute: typeof AuthenticatedImport
     }
+    '/_authenticated/teams/$teamId': {
+      id: '/_authenticated/teams/$teamId'
+      path: '/$teamId'
+      fullPath: '/teams/$teamId'
+      preLoaderRoute: typeof AuthenticatedTeamsTeamIdImport
+      parentRoute: typeof AuthenticatedTeamsImport
+    }
+    '/_authenticated/teams/': {
+      id: '/_authenticated/teams/'
+      path: '/'
+      fullPath: '/teams/'
+      preLoaderRoute: typeof AuthenticatedTeamsIndexImport
+      parentRoute: typeof AuthenticatedTeamsImport
+    }
   }
 }
 
 // Create and export the route tree
 
+interface AuthenticatedTeamsRouteChildren {
+  AuthenticatedTeamsTeamIdRoute: typeof AuthenticatedTeamsTeamIdRoute
+  AuthenticatedTeamsIndexRoute: typeof AuthenticatedTeamsIndexRoute
+}
+
+const AuthenticatedTeamsRouteChildren: AuthenticatedTeamsRouteChildren = {
+  AuthenticatedTeamsTeamIdRoute: AuthenticatedTeamsTeamIdRoute,
+  AuthenticatedTeamsIndexRoute: AuthenticatedTeamsIndexRoute,
+}
+
+const AuthenticatedTeamsRouteWithChildren =
+  AuthenticatedTeamsRoute._addFileChildren(AuthenticatedTeamsRouteChildren)
+
 interface AuthenticatedRouteChildren {
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
-  AuthenticatedTeamsRoute: typeof AuthenticatedTeamsRoute
+  AuthenticatedTeamsRoute: typeof AuthenticatedTeamsRouteWithChildren
 }
 
 const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
-  AuthenticatedTeamsRoute: AuthenticatedTeamsRoute,
+  AuthenticatedTeamsRoute: AuthenticatedTeamsRouteWithChildren,
 }
 
 const AuthenticatedRouteWithChildren = AuthenticatedRoute._addFileChildren(
@@ -96,14 +137,17 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '': typeof AuthenticatedRouteWithChildren
   '/dashboard': typeof AuthenticatedDashboardRoute
-  '/teams': typeof AuthenticatedTeamsRoute
+  '/teams': typeof AuthenticatedTeamsRouteWithChildren
+  '/teams/$teamId': typeof AuthenticatedTeamsTeamIdRoute
+  '/teams/': typeof AuthenticatedTeamsIndexRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '': typeof AuthenticatedRouteWithChildren
   '/dashboard': typeof AuthenticatedDashboardRoute
-  '/teams': typeof AuthenticatedTeamsRoute
+  '/teams/$teamId': typeof AuthenticatedTeamsTeamIdRoute
+  '/teams': typeof AuthenticatedTeamsIndexRoute
 }
 
 export interface FileRoutesById {
@@ -111,20 +155,24 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteWithChildren
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
-  '/_authenticated/teams': typeof AuthenticatedTeamsRoute
+  '/_authenticated/teams': typeof AuthenticatedTeamsRouteWithChildren
+  '/_authenticated/teams/$teamId': typeof AuthenticatedTeamsTeamIdRoute
+  '/_authenticated/teams/': typeof AuthenticatedTeamsIndexRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '' | '/dashboard' | '/teams'
+  fullPaths: '/' | '' | '/dashboard' | '/teams' | '/teams/$teamId' | '/teams/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '' | '/dashboard' | '/teams'
+  to: '/' | '' | '/dashboard' | '/teams/$teamId' | '/teams'
   id:
     | '__root__'
     | '/'
     | '/_authenticated'
     | '/_authenticated/dashboard'
     | '/_authenticated/teams'
+    | '/_authenticated/teams/$teamId'
+    | '/_authenticated/teams/'
   fileRoutesById: FileRoutesById
 }
 
@@ -168,7 +216,19 @@ export const routeTree = rootRoute
     },
     "/_authenticated/teams": {
       "filePath": "_authenticated/teams.tsx",
-      "parent": "/_authenticated"
+      "parent": "/_authenticated",
+      "children": [
+        "/_authenticated/teams/$teamId",
+        "/_authenticated/teams/"
+      ]
+    },
+    "/_authenticated/teams/$teamId": {
+      "filePath": "_authenticated/teams/$teamId.tsx",
+      "parent": "/_authenticated/teams"
+    },
+    "/_authenticated/teams/": {
+      "filePath": "_authenticated/teams/index.tsx",
+      "parent": "/_authenticated/teams"
     }
   }
 }
