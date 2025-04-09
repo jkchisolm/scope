@@ -8,11 +8,10 @@ import {
 import {
   ChartContainer,
   ChartLegend,
-  ChartLegendContent,
   ChartTooltip,
-  ChartTooltipContent,
   type ChartConfig,
 } from "@/components/ui/chart";
+import dayjs from "dayjs";
 import { CartesianGrid, Line, LineChart, XAxis, YAxis } from "recharts";
 
 type Props = {
@@ -63,6 +62,99 @@ const SortedLegend = ({ chartConfig, dailyPoints }: Props) => {
   );
 };
 
+const SortedTooltip: React.FC<{
+  active?: boolean;
+  payload?: { dataKey: string; value: number; color?: string }[];
+  label?: string;
+  chartConfig: ChartConfig;
+}> = ({ active, payload, label, chartConfig }) => {
+  // If no data to show, return null (the tooltip won't display)
+  if (!active || !payload || !payload.length) {
+    return null;
+  }
+
+  // Sort the payload array by the value in descending order
+  const sortedPayload = [...payload].sort(
+    (a, b) => (b as { value: number }).value - (a as { value: number }).value
+  );
+
+  // Format the label as a date string (optional).
+  // If your 'label' is a string like "2025-03-15", this can parse that.
+  // Adjust the date format to your preference.
+  const dateLabel = dayjs(label).isValid()
+    ? dayjs(label).format("MMM D, YYYY")
+    : label;
+
+  return (
+    <div
+      style={{
+        backgroundColor: "#fff",
+        border: "1px solid #ccc",
+        padding: "0.75rem 1rem",
+        borderRadius: "0.5rem",
+        boxShadow: "0 2px 5px rgba(0,0,0,0.15)",
+      }}
+    >
+      {/* Date / Title */}
+      <p style={{ margin: 0, fontWeight: "bold", marginBottom: "0.5rem" }}>
+        {dateLabel}
+      </p>
+
+      <ul
+        style={{
+          listStyle: "none",
+          margin: 0,
+          padding: 0,
+        }}
+      >
+        {sortedPayload.map((item) => {
+          const { dataKey, value } = item as {
+            dataKey: string;
+            value: number;
+            color?: string;
+          };
+          const config = chartConfig[dataKey];
+          // fallback to item.color if needed
+          const color = config?.color ?? item.color;
+          const labelText = config?.label ?? dataKey;
+          const formattedValue =
+            typeof value === "number" ? value.toLocaleString() : value;
+
+          return (
+            <li
+              key={dataKey}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                marginBottom: "0.25rem",
+                gap: "0.5rem",
+              }}
+            >
+              {/* Color box */}
+              <span
+                style={{
+                  width: "12px",
+                  height: "12px",
+                  backgroundColor: color,
+                  display: "inline-block",
+                  borderRadius: "2px",
+                }}
+              />
+              {/* Team name (slightly faded) and bold score */}
+              <span style={{ color: "#666" }}>
+                {labelText}{" "}
+                <span style={{ fontWeight: "bold", color: "#000" }}>
+                  {formattedValue}
+                </span>
+              </span>
+            </li>
+          );
+        })}
+      </ul>
+    </div>
+  );
+};
+
 export const OverviewChart = ({ chartConfig, dailyPoints }: Props) => {
   console.log("dailyPoints", dailyPoints);
   return (
@@ -104,17 +196,7 @@ export const OverviewChart = ({ chartConfig, dailyPoints }: Props) => {
             <YAxis />
             <ChartTooltip
               cursor={false}
-              content={
-                <ChartTooltipContent
-                  labelFormatter={(value) => {
-                    return new Date(value).toLocaleDateString("en-US", {
-                      month: "short",
-                      day: "numeric",
-                      year: "numeric",
-                    });
-                  }}
-                />
-              }
+              content={<SortedTooltip chartConfig={chartConfig} />}
             />
             {/* <ChartLegend content={<ChartLegendContent />} /> */}
             <ChartLegend
