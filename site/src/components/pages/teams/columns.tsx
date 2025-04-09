@@ -18,7 +18,28 @@ export const ActivityColumns: ColumnDef<Activity>[] = [
     header: "Points",
   },
   {
-    accessorKey: "createdAt",
+    accessorKey: "date",
     header: "Date",
+    cell: ({ row }) => {
+      const date = new Date(row.getValue("date"));
+      const options: Intl.DateTimeFormatOptions = {
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+        // hour: "2-digit",
+        // minute: "2-digit",
+      };
+      const formattedDate = date.toLocaleDateString("en-US", options);
+      // const formattedTime = date.toLocaleTimeString("en-US", {
+      //   hour: "2-digit",
+      //   minute: "2-digit",
+      // });
+      return (
+        <div className="flex flex-col">
+          <span>{formattedDate}</span>
+          {/* <span>{formattedTime}</span> */}
+        </div>
+      );
+    },
   },
 ];

@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/dialog";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { PlusCircleIcon } from "lucide-react";
+import { BatchActivityForm } from "./BatchActivityForm";
 import { SingleActivityForm } from "./SingleActivityForm";
 
 type Props = {
@@ -39,7 +40,7 @@ export const AddActivityDialog = ({ teamId }: Props) => {
             <SingleActivityForm teamId={teamId} />
           </TabsContent>
           <TabsContent value="batch">
-            {/* <BatchActivityForm teamId={teamId} /> */}
+            <BatchActivityForm teamId={teamId} />
           </TabsContent>
         </Tabs>
       </DialogContent>

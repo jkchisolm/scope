@@ -8,6 +8,7 @@ import audit from "express-requests-logger";
 import bunyan from "bunyan";
 import teamsController from "#teams/teams.controller.js";
 import categoriesController from "#categories/categories.controller.js";
+import activitiesController from "#activities/activities.controller.js";
 const app = express();
 const port = process.env.PORT || 4000;
 
@@ -38,6 +39,7 @@ app.use(express.json());
 app.use("/api/user", userController);
 app.use("/api/teams", teamsController);
 app.use("/api/categories", categoriesController);
+app.use("/api/activities", activitiesController);
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);

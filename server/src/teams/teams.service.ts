@@ -31,7 +31,11 @@ const getTeam = async (teamId: string) => {
     where: { id: teamId },
     include: {
       Member: true,
-      Activity: true,
+      Activity: {
+        orderBy: {
+          date: "desc",
+        },
+      },
     },
   });
 

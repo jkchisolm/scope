@@ -24,7 +24,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { TeamQueries } from "@/lib/queries/TeamQueries";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
-import { PlusCircle, UserPlus } from "lucide-react";
+import { UserPlus } from "lucide-react";
 import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from "recharts";
 
 export const Route = createFileRoute("/_authenticated/teams/$teamId")({
@@ -49,8 +49,6 @@ function RouteComponent() {
   // Fetch the team data using the teamId
   const { data: team } = useSuspenseQuery(TeamQueries.getSingleTeam(teamId));
 
-  console.log(team);
-
   const chartConfig = {
     value: {
       label: team.name,
@@ -67,7 +65,9 @@ function RouteComponent() {
       <div className="flex flex-row gap-2">
         {team.Member.filter((member) => member.role === "EBOARD").map(
           (member) => (
-            <Badge variant="outline">{member.name}</Badge>
+            <Badge variant="outline" key={member.name}>
+              {member.name}
+            </Badge>
           )
         )}
       </div>

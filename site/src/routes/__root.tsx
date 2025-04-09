@@ -1,3 +1,4 @@
+import { Toaster } from "@/components/ui/sonner";
 import type { QueryClient } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { Outlet, createRootRouteWithContext } from "@tanstack/react-router";
@@ -10,6 +11,7 @@ interface RouterContext {
 export const Route = createRootRouteWithContext<RouterContext>()({
   component: () => (
     <>
+      <Toaster />
       <Outlet />
       <TanStackRouterDevtools />
       <ReactQueryDevtools initialIsOpen={false} />

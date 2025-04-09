@@ -14,6 +14,7 @@ import { Route as rootRoute } from './routes/__root'
 import { Route as AuthenticatedImport } from './routes/_authenticated'
 import { Route as IndexImport } from './routes/index'
 import { Route as AuthenticatedTeamsImport } from './routes/_authenticated/teams'
+import { Route as AuthenticatedRulesImport } from './routes/_authenticated/rules'
 import { Route as AuthenticatedDashboardImport } from './routes/_authenticated/dashboard'
 import { Route as AuthenticatedTeamsIndexImport } from './routes/_authenticated/teams/index'
 import { Route as AuthenticatedTeamsTeamIdImport } from './routes/_authenticated/teams/$teamId'
@@ -34,6 +35,12 @@ const IndexRoute = IndexImport.update({
 const AuthenticatedTeamsRoute = AuthenticatedTeamsImport.update({
   id: '/teams',
   path: '/teams',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
+
+const AuthenticatedRulesRoute = AuthenticatedRulesImport.update({
+  id: '/rules',
+  path: '/rules',
   getParentRoute: () => AuthenticatedRoute,
 } as any)
 
@@ -80,6 +87,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedDashboardImport
       parentRoute: typeof AuthenticatedImport
     }
+    '/_authenticated/rules': {
+      id: '/_authenticated/rules'
+      path: '/rules'
+      fullPath: '/rules'
+      preLoaderRoute: typeof AuthenticatedRulesImport
+      parentRoute: typeof AuthenticatedImport
+    }
     '/_authenticated/teams': {
       id: '/_authenticated/teams'
       path: '/teams'
@@ -121,11 +135,13 @@ const AuthenticatedTeamsRouteWithChildren =
 
 interface AuthenticatedRouteChildren {
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
+  AuthenticatedRulesRoute: typeof AuthenticatedRulesRoute
   AuthenticatedTeamsRoute: typeof AuthenticatedTeamsRouteWithChildren
 }
 
 const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
+  AuthenticatedRulesRoute: AuthenticatedRulesRoute,
   AuthenticatedTeamsRoute: AuthenticatedTeamsRouteWithChildren,
 }
 
@@ -137,6 +153,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '': typeof AuthenticatedRouteWithChildren
   '/dashboard': typeof AuthenticatedDashboardRoute
+  '/rules': typeof AuthenticatedRulesRoute
   '/teams': typeof AuthenticatedTeamsRouteWithChildren
   '/teams/$teamId': typeof AuthenticatedTeamsTeamIdRoute
   '/teams/': typeof AuthenticatedTeamsIndexRoute
@@ -146,6 +163,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '': typeof AuthenticatedRouteWithChildren
   '/dashboard': typeof AuthenticatedDashboardRoute
+  '/rules': typeof AuthenticatedRulesRoute
   '/teams/$teamId': typeof AuthenticatedTeamsTeamIdRoute
   '/teams': typeof AuthenticatedTeamsIndexRoute
 }
@@ -155,6 +173,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteWithChildren
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
+  '/_authenticated/rules': typeof AuthenticatedRulesRoute
   '/_authenticated/teams': typeof AuthenticatedTeamsRouteWithChildren
   '/_authenticated/teams/$teamId': typeof AuthenticatedTeamsTeamIdRoute
   '/_authenticated/teams/': typeof AuthenticatedTeamsIndexRoute
@@ -162,14 +181,22 @@ export interface FileRoutesById {
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '' | '/dashboard' | '/teams' | '/teams/$teamId' | '/teams/'
+  fullPaths:
+    | '/'
+    | ''
+    | '/dashboard'
+    | '/rules'
+    | '/teams'
+    | '/teams/$teamId'
+    | '/teams/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '' | '/dashboard' | '/teams/$teamId' | '/teams'
+  to: '/' | '' | '/dashboard' | '/rules' | '/teams/$teamId' | '/teams'
   id:
     | '__root__'
     | '/'
     | '/_authenticated'
     | '/_authenticated/dashboard'
+    | '/_authenticated/rules'
     | '/_authenticated/teams'
     | '/_authenticated/teams/$teamId'
     | '/_authenticated/teams/'
@@ -207,11 +234,16 @@ export const routeTree = rootRoute
       "filePath": "_authenticated.tsx",
       "children": [
         "/_authenticated/dashboard",
+        "/_authenticated/rules",
         "/_authenticated/teams"
       ]
     },
     "/_authenticated/dashboard": {
       "filePath": "_authenticated/dashboard.tsx",
+      "parent": "/_authenticated"
+    },
+    "/_authenticated/rules": {
+      "filePath": "_authenticated/rules.tsx",
       "parent": "/_authenticated"
     },
     "/_authenticated/teams": {
