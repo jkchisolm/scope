@@ -13,6 +13,25 @@ const getAllTeams = queryOptions({
   },
 });
 
+const getSingleTeam = (teamId: string) => {
+  return queryOptions({
+    queryKey: ["team", teamId],
+    queryFn: async () => {
+      return await fetch(
+        `${import.meta.env.VITE_SERVER_URL}/api/teams/${teamId}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include", // Include cookies in the request
+        }
+      ).then((res) => res.json());
+    },
+  });
+};
+
 export const TeamQueries = {
   getAllTeams,
+  getSingleTeam,
 };
