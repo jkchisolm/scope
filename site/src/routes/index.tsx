@@ -46,9 +46,9 @@ function App() {
 
   return (
     <div className="flex flex-col justify-center items-center h-screen">
-      {/* <h1 className="text-7xl">
+      <h1 className="text-7xl">
         <span className="font-bold text-purple-500">Scopey</span> scope
-      </h1> */}
+      </h1>
       <div className="mt-10">
         {loading ? (
           <div>Loading...</div>

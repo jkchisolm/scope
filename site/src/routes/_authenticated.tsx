@@ -5,7 +5,7 @@ import {
 } from "@/contexts/AuthenticatedContext";
 import { UserQueries } from "@/lib/queries/UserQueries";
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { createFileRoute, Outlet } from "@tanstack/react-router";
+import { createFileRoute, Outlet, useRouter } from "@tanstack/react-router";
 import { Suspense, useContext, useEffect } from "react";
 
 export const Route = createFileRoute("/_authenticated")({
@@ -17,6 +17,8 @@ export const Route = createFileRoute("/_authenticated")({
 });
 
 function RouteComponent() {
+  const router = useRouter();
+
   const { setUserData } = useContext(
     AuthenticatedContext
   ) as AuthenticatedContextType;
@@ -26,6 +28,8 @@ function RouteComponent() {
   useEffect(() => {
     if (data.data) {
       setUserData(data.data);
+    } else {
+      router.navigate({ to: "/" });
     }
   }, [data.data, setUserData]);
 
