@@ -18,11 +18,20 @@ import { DataTablePagination } from "./DataTablePagination";
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
+  pagination?: boolean;
 }
 
+/**
+ *
+ * @param columns The columns for the table. See `DataTableColumns.tsx`
+ * @param data The data for the table. Should be the type corresponding to the columns.
+ * @param pagination Whether to show pagination. Defaults to true.
+ * @returns DataTable component
+ */
 export function DataTable<TData, TValue>({
   columns,
   data,
+  pagination = true,
 }: DataTableProps<TData, TValue>) {
   const table = useReactTable({
     data,
@@ -83,7 +92,7 @@ export function DataTable<TData, TValue>({
           </TableBody>
         </Table>
       </div>
-      <DataTablePagination table={table} />
+      {pagination && <DataTablePagination table={table} />}
     </div>
   );
 }

@@ -21,7 +21,6 @@ export const Route = createFileRoute("/_authenticated/dashboard")({
 function RouteComponent() {
   const { data } = useSuspenseQuery(TeamQueries.getAllTeams);
   const { data: activities } = useSuspenseQuery(ActivityQueries.getActivites);
-  console.log(activities);
   const teams = data as Team[];
   // get the dailyPoints array from each team and store in an array
   const teamDailyPoints = teams.map((team) => {
@@ -33,8 +32,6 @@ function RouteComponent() {
     ...teams.map((team) => team.name),
   ]);
 
-  console.log(combinedDaily);
-
   // create an object chartConfig
   // four keys with the team na,e and two properties: "label" (teamname) and "color" from the colors array
   const chartConfig = teams.reduce((config, team) => {
@@ -44,8 +41,6 @@ function RouteComponent() {
     };
     return config;
   }, {} as ChartConfig);
-
-  console.log("chartConfig", chartConfig);
 
   return (
     <div className="flex flex-1 flex-col">

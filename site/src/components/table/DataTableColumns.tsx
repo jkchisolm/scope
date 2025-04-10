@@ -1,4 +1,4 @@
-import type { Activity, Member } from "@/lib/types";
+import type { Activity, ActivityCategory, Member } from "@/lib/types";
 import type { ColumnDef } from "@tanstack/react-table";
 
 export const MemberColumns: ColumnDef<Member>[] = [
@@ -41,6 +41,21 @@ export const ActivityColumns: ColumnDef<Activity>[] = [
         </div>
       );
     },
+  },
+];
+
+export const CategoryColumns: ColumnDef<ActivityCategory>[] = [
+  {
+    accessorKey: "name",
+    header: "Name",
+  },
+  {
+    accessorKey: "description",
+    header: "Description",
+  },
+  {
+    accessorKey: "points",
+    header: "Points",
   },
 ];
 

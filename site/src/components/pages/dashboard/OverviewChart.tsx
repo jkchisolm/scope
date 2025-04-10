@@ -122,7 +122,6 @@ const SortedTooltip: React.FC<{
 };
 
 export const OverviewChart = ({ chartConfig, dailyPoints }: Props) => {
-  console.log("dailyPoints", dailyPoints);
   return (
     <Card className="@container/card">
       <CardHeader>

@@ -6,7 +6,7 @@ const getCategories = queryOptions<ActivityCategory[], unknown>({
   queryFn: async () => {
     return await fetch(
       `${import.meta.env.VITE_SERVER_URL}/api/categories`
-    ).then((res) => res.json());
+    ).then((res) => res.json() as unknown as ActivityCategory[]);
   },
 });
 
