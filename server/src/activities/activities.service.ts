@@ -83,9 +83,21 @@ const getActivitiesForMember = (memberId: string) => {
   });
 };
 
+const getActivities = () => {
+  return prisma.activity.findMany({
+    orderBy: {
+      date: "desc",
+    },
+    include: {
+      Team: true,
+    },
+  });
+};
+
 export const activityService = {
   createActivity,
   createBatchActivity,
   getActivitiesForTeam,
   getActivitiesForMember,
+  getActivities,
 };

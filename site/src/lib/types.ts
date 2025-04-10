@@ -62,7 +62,7 @@ export type Activity = {
   date: Date;
   createdAt: Date;
   updatedAt: Date;
-  team: Team;
+  Team: Team;
   teamId: string;
   category: ActivityCategory;
   categoryId: string;

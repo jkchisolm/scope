@@ -1,7 +1,7 @@
 import { CategoryQueries } from "@/lib/queries/CategoryQueries";
 import { cn } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { type CreateActivityBody } from "@/lib/types";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
@@ -28,6 +28,8 @@ import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
 import { useForm } from "react-hook-form";
 import z from "zod";
+import { TeamQueries } from "@/lib/queries/TeamQueries";
+import { toast } from "sonner";
 
 const formSchema = z.object({
   category: z
@@ -49,13 +51,15 @@ type Props = {
 };
 
 export const SingleActivityForm = ({ teamId }: Props) => {
+  const client = useQueryClient();
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
   });
 
   const addActivity = useMutation({
     mutationFn: (body: CreateActivityBody) => {
-      return fetch(`${import.meta.env.VITE_SERVER_URL}/api/v1/activities`, {
+      return fetch(`${import.meta.env.VITE_SERVER_URL}/api/activities/single`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -95,9 +99,10 @@ export const SingleActivityForm = ({ teamId }: Props) => {
 
     console.log(body);
     addActivity.mutate(body, {
-      // onSuccess: () => {
-      //   client.invalidateQueries("getActivitiesForTeam");
-      // },
+      onSuccess: () => {
+        client.invalidateQueries(TeamQueries.getSingleTeam(teamId));
+        toast.success("Activity added successfully");
+      },
     });
   };
 

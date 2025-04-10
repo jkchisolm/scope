@@ -1,9 +1,9 @@
-import { DataTable } from "@/components/DataTable";
+import { DataTable } from "@/components/table/DataTable";
 import { AddActivityDialog } from "@/components/pages/teams/AddActivityDialog";
 import {
   ActivityColumns,
   MemberColumns,
-} from "@/components/pages/teams/columns";
+} from "@/components/table/DataTableColumns";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {

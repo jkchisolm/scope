@@ -8,7 +8,7 @@ export default function AuthenticatedLayout({
   return (
     <div className="flex h-screen w-screen flex-col">
       <Header />
-      <div className="p-5">{children}</div>
+      <div className="p-8">{children}</div>
     </div>
   );
 }

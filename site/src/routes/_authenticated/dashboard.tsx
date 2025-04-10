@@ -1,6 +1,9 @@
+import { DataTable } from "@/components/table/DataTable";
+import { ActivityDashboardColumns } from "@/components/table/DataTableColumns";
 import { OverviewChart } from "@/components/pages/dashboard/OverviewChart";
 import TeamCards from "@/components/pages/dashboard/TeamCards";
 import type { ChartConfig } from "@/components/ui/chart";
+import { ActivityQueries } from "@/lib/queries/ActivityQueries";
 import { TeamQueries } from "@/lib/queries/TeamQueries";
 import type { Team } from "@/lib/types";
 import { getDailyCombinedPoints } from "@/lib/utils";
@@ -17,6 +20,8 @@ export const Route = createFileRoute("/_authenticated/dashboard")({
 
 function RouteComponent() {
   const { data } = useSuspenseQuery(TeamQueries.getAllTeams);
+  const { data: activities } = useSuspenseQuery(ActivityQueries.getActivites);
+  console.log(activities);
   const teams = data as Team[];
   // get the dailyPoints array from each team and store in an array
   const teamDailyPoints = teams.map((team) => {
@@ -54,11 +59,15 @@ function RouteComponent() {
             }))}
           />
         </div>
-        <div className="px-4 lg:px-6">
+        <div className="">
           <OverviewChart
             chartConfig={chartConfig}
             dailyPoints={combinedDaily}
           />
+        </div>
+        <div>
+          <h2 className="font-bold text-2xl my-3">Most Recent Activities</h2>
+          <DataTable columns={ActivityDashboardColumns} data={activities} />
         </div>
       </div>
     </div>
