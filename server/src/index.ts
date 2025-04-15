@@ -4,8 +4,8 @@ import cors from "cors";
 import { auth } from "../lib/auth";
 import userController from "#user/user.controller.js";
 // var audit = require("express-requests-logger");
-import audit from "express-requests-logger";
-import bunyan from "bunyan";
+// import audit from "express-requests-logger";
+// import bunyan from "bunyan";
 import teamsController from "#teams/teams.controller.js";
 import categoriesController from "#categories/categories.controller.js";
 import activitiesController from "#activities/activities.controller.js";
@@ -25,6 +25,7 @@ app.use(
   })
 );
 
+// This is for logging requests and responses. However, for some completely unknown reason, auth does *not* work if you uncomment this. Don't do it.
 // app.use(
 //   audit({
 //     logger: bunyan.createLogger({ name: "Scopey" }),
