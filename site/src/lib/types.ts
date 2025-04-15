@@ -69,6 +69,8 @@ export type Activity = {
   participants: ActivityMember[];
 };
 
+export type Attendance = {};
+
 export type ActivityCategory = {
   id: string;
   name: string;

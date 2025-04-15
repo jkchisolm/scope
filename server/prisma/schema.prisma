@@ -48,6 +48,7 @@ model MeetingAttendance {
   memberId  String
   teamId    String
   date      DateTime
+  attended  Boolean
   isExcused Boolean
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

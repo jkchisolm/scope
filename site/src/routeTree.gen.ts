@@ -18,6 +18,8 @@ import { Route as AuthenticatedRulesImport } from './routes/_authenticated/rules
 import { Route as AuthenticatedDashboardImport } from './routes/_authenticated/dashboard'
 import { Route as AuthenticatedTeamsIndexImport } from './routes/_authenticated/teams/index'
 import { Route as AuthenticatedTeamsTeamIdImport } from './routes/_authenticated/teams/$teamId'
+import { Route as AuthenticatedTeamsTeamIdIndexImport } from './routes/_authenticated/teams/$teamId/index'
+import { Route as AuthenticatedTeamsTeamIdAttendanceImport } from './routes/_authenticated/teams/$teamId/attendance'
 
 // Create/Update Routes
 
@@ -61,6 +63,20 @@ const AuthenticatedTeamsTeamIdRoute = AuthenticatedTeamsTeamIdImport.update({
   path: '/$teamId',
   getParentRoute: () => AuthenticatedTeamsRoute,
 } as any)
+
+const AuthenticatedTeamsTeamIdIndexRoute =
+  AuthenticatedTeamsTeamIdIndexImport.update({
+    id: '/',
+    path: '/',
+    getParentRoute: () => AuthenticatedTeamsTeamIdRoute,
+  } as any)
+
+const AuthenticatedTeamsTeamIdAttendanceRoute =
+  AuthenticatedTeamsTeamIdAttendanceImport.update({
+    id: '/attendance',
+    path: '/attendance',
+    getParentRoute: () => AuthenticatedTeamsTeamIdRoute,
+  } as any)
 
 // Populate the FileRoutesByPath interface
 
@@ -115,18 +131,49 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedTeamsIndexImport
       parentRoute: typeof AuthenticatedTeamsImport
     }
+    '/_authenticated/teams/$teamId/attendance': {
+      id: '/_authenticated/teams/$teamId/attendance'
+      path: '/attendance'
+      fullPath: '/teams/$teamId/attendance'
+      preLoaderRoute: typeof AuthenticatedTeamsTeamIdAttendanceImport
+      parentRoute: typeof AuthenticatedTeamsTeamIdImport
+    }
+    '/_authenticated/teams/$teamId/': {
+      id: '/_authenticated/teams/$teamId/'
+      path: '/'
+      fullPath: '/teams/$teamId/'
+      preLoaderRoute: typeof AuthenticatedTeamsTeamIdIndexImport
+      parentRoute: typeof AuthenticatedTeamsTeamIdImport
+    }
   }
 }
 
 // Create and export the route tree
 
+interface AuthenticatedTeamsTeamIdRouteChildren {
+  AuthenticatedTeamsTeamIdAttendanceRoute: typeof AuthenticatedTeamsTeamIdAttendanceRoute
+  AuthenticatedTeamsTeamIdIndexRoute: typeof AuthenticatedTeamsTeamIdIndexRoute
+}
+
+const AuthenticatedTeamsTeamIdRouteChildren: AuthenticatedTeamsTeamIdRouteChildren =
+  {
+    AuthenticatedTeamsTeamIdAttendanceRoute:
+      AuthenticatedTeamsTeamIdAttendanceRoute,
+    AuthenticatedTeamsTeamIdIndexRoute: AuthenticatedTeamsTeamIdIndexRoute,
+  }
+
+const AuthenticatedTeamsTeamIdRouteWithChildren =
+  AuthenticatedTeamsTeamIdRoute._addFileChildren(
+    AuthenticatedTeamsTeamIdRouteChildren,
+  )
+
 interface AuthenticatedTeamsRouteChildren {
-  AuthenticatedTeamsTeamIdRoute: typeof AuthenticatedTeamsTeamIdRoute
+  AuthenticatedTeamsTeamIdRoute: typeof AuthenticatedTeamsTeamIdRouteWithChildren
   AuthenticatedTeamsIndexRoute: typeof AuthenticatedTeamsIndexRoute
 }
 
 const AuthenticatedTeamsRouteChildren: AuthenticatedTeamsRouteChildren = {
-  AuthenticatedTeamsTeamIdRoute: AuthenticatedTeamsTeamIdRoute,
+  AuthenticatedTeamsTeamIdRoute: AuthenticatedTeamsTeamIdRouteWithChildren,
   AuthenticatedTeamsIndexRoute: AuthenticatedTeamsIndexRoute,
 }
 
@@ -155,8 +202,10 @@ export interface FileRoutesByFullPath {
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/rules': typeof AuthenticatedRulesRoute
   '/teams': typeof AuthenticatedTeamsRouteWithChildren
-  '/teams/$teamId': typeof AuthenticatedTeamsTeamIdRoute
+  '/teams/$teamId': typeof AuthenticatedTeamsTeamIdRouteWithChildren
   '/teams/': typeof AuthenticatedTeamsIndexRoute
+  '/teams/$teamId/attendance': typeof AuthenticatedTeamsTeamIdAttendanceRoute
+  '/teams/$teamId/': typeof AuthenticatedTeamsTeamIdIndexRoute
 }
 
 export interface FileRoutesByTo {
@@ -164,8 +213,9 @@ export interface FileRoutesByTo {
   '': typeof AuthenticatedRouteWithChildren
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/rules': typeof AuthenticatedRulesRoute
-  '/teams/$teamId': typeof AuthenticatedTeamsTeamIdRoute
   '/teams': typeof AuthenticatedTeamsIndexRoute
+  '/teams/$teamId/attendance': typeof AuthenticatedTeamsTeamIdAttendanceRoute
+  '/teams/$teamId': typeof AuthenticatedTeamsTeamIdIndexRoute
 }
 
 export interface FileRoutesById {
@@ -175,8 +225,10 @@ export interface FileRoutesById {
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
   '/_authenticated/rules': typeof AuthenticatedRulesRoute
   '/_authenticated/teams': typeof AuthenticatedTeamsRouteWithChildren
-  '/_authenticated/teams/$teamId': typeof AuthenticatedTeamsTeamIdRoute
+  '/_authenticated/teams/$teamId': typeof AuthenticatedTeamsTeamIdRouteWithChildren
   '/_authenticated/teams/': typeof AuthenticatedTeamsIndexRoute
+  '/_authenticated/teams/$teamId/attendance': typeof AuthenticatedTeamsTeamIdAttendanceRoute
+  '/_authenticated/teams/$teamId/': typeof AuthenticatedTeamsTeamIdIndexRoute
 }
 
 export interface FileRouteTypes {
@@ -189,8 +241,17 @@ export interface FileRouteTypes {
     | '/teams'
     | '/teams/$teamId'
     | '/teams/'
+    | '/teams/$teamId/attendance'
+    | '/teams/$teamId/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '' | '/dashboard' | '/rules' | '/teams/$teamId' | '/teams'
+  to:
+    | '/'
+    | ''
+    | '/dashboard'
+    | '/rules'
+    | '/teams'
+    | '/teams/$teamId/attendance'
+    | '/teams/$teamId'
   id:
     | '__root__'
     | '/'
@@ -200,6 +261,8 @@ export interface FileRouteTypes {
     | '/_authenticated/teams'
     | '/_authenticated/teams/$teamId'
     | '/_authenticated/teams/'
+    | '/_authenticated/teams/$teamId/attendance'
+    | '/_authenticated/teams/$teamId/'
   fileRoutesById: FileRoutesById
 }
 
@@ -256,11 +319,23 @@ export const routeTree = rootRoute
     },
     "/_authenticated/teams/$teamId": {
       "filePath": "_authenticated/teams/$teamId.tsx",
-      "parent": "/_authenticated/teams"
+      "parent": "/_authenticated/teams",
+      "children": [
+        "/_authenticated/teams/$teamId/attendance",
+        "/_authenticated/teams/$teamId/"
+      ]
     },
     "/_authenticated/teams/": {
       "filePath": "_authenticated/teams/index.tsx",
       "parent": "/_authenticated/teams"
+    },
+    "/_authenticated/teams/$teamId/attendance": {
+      "filePath": "_authenticated/teams/$teamId/attendance.tsx",
+      "parent": "/_authenticated/teams/$teamId"
+    },
+    "/_authenticated/teams/$teamId/": {
+      "filePath": "_authenticated/teams/$teamId/index.tsx",
+      "parent": "/_authenticated/teams/$teamId"
     }
   }
 }

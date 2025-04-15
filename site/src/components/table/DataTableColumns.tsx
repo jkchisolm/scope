@@ -111,3 +111,5 @@ export const ActivityDashboardColumns: ColumnDef<Activity>[] = [
     },
   },
 ];
+
+export const AttendanceColumns = [];

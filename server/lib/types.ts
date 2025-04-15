@@ -111,3 +111,17 @@ export interface CreateCategoryBody {
   description: string;
   points: number;
 }
+
+export interface AttendanceResponse {
+  id: string;
+  memberId: string;
+  date: Date;
+  attended: boolean;
+  isExcused: boolean;
+  createdAt: Date;
+  updatedAt: Date;
+  member?: {
+    memberId: string;
+    name: string;
+  };
+}
