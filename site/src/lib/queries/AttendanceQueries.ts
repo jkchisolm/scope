@@ -1,9 +1,10 @@
 import { queryOptions } from "@tanstack/react-query";
 import type { AttendanceResponse, AttendancesByDate } from "../types";
 
-const getAttendanceForTeam = (teamId: string, date: Date) => {
+const getAttendanceForTeam = (teamId: string, date: Date, enabled: boolean) => {
   return queryOptions({
     queryKey: ["attendance", teamId, date],
+    enabled,
     queryFn: async () => {
       return await fetch(
         `${

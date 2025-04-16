@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/select";
 import { AttendanceQueries } from "@/lib/queries/AttendanceQueries";
 import { useQuery } from "@tanstack/react-query";
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, useRouter } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
 import { z } from "zod";
 
@@ -27,8 +27,11 @@ export const Route = createFileRoute(
 function RouteComponent() {
   const { creationDate } = Route.useSearch();
   const { teamId } = Route.useParams();
+  const { queryClient } = Route.useRouteContext();
+  const router = useRouter();
 
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+  const [fetchAttendances, setFetchAttendances] = useState(false);
 
   const availableDates = useMemo(() => {
     const startDate = new Date(creationDate);
@@ -53,15 +56,23 @@ function RouteComponent() {
     return dates.reverse();
   }, [creationDate]);
 
-  const { data: attendancesByDate } = useQuery(
-    AttendanceQueries.getAllAttendanceForTeam(teamId)
+  // const { data: attendancesByDate } = useQuery(
+  //   AttendanceQueries.getAllAttendanceForTeam(teamId)
+  // );
+
+  const { data: attendances } = useQuery(
+    AttendanceQueries.getAttendanceForTeam(
+      teamId,
+      selectedDate!,
+      fetchAttendances
+    )
   );
 
-  if (!attendancesByDate) {
-    return <div>Loading...</div>;
-  }
+  // if (!attendances) {
+  //   return <div>Loading...</div>;
+  // }
 
-  console.log(attendancesByDate);
+  // console.log(attendancesByDate);
 
   return (
     <div className="flex flex-col justify-start items-start">
@@ -73,6 +84,19 @@ function RouteComponent() {
             const selectedDate = new Date(value);
             selectedDate.setHours(0, 0, 0, 0);
             setSelectedDate(selectedDate);
+
+            queryClient.invalidateQueries(
+              AttendanceQueries.getAttendanceForTeam(
+                teamId,
+                selectedDate,
+                fetchAttendances
+              )
+            );
+
+            setFetchAttendances(true);
+            setTimeout(() => {
+              setFetchAttendances(false);
+            }, 3000);
           }}
         >
           <SelectTrigger className="w-[180px]">
@@ -100,13 +124,15 @@ function RouteComponent() {
               })}
             </h2>
             <ul className="mt-4">
-              {
+              {attendances ? (
                 <DataTable
                   columns={AttendanceColumns}
-                  data={attendancesByDate[selectedDate.toISOString()]}
+                  data={attendances!}
                   // pagination={false}
                 />
-              }
+              ) : (
+                <div className="text-gray-500">Loading...</div>
+              )}
               {/* {attendancesByDate[selectedDate.toISOString()]?.map(
                 (attendance) => (
                   <li key={attendance.id}>
