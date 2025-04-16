@@ -131,6 +131,7 @@ export const AttendanceColumns: ColumnDef<AttendanceResponse>[] = [
     header: "Attended",
     cell: ({ row }) => {
       const member = row.original;
+      console.log(member);
       const attended = row.getValue("attended");
       return (
         <div className="flex items-center gap-2">
@@ -197,9 +198,12 @@ export const AttendanceColumns: ColumnDef<AttendanceResponse>[] = [
               date: member.date as unknown as string,
             });
 
-            queryClient.invalidateQueries(
-              AttendanceQueries.getAllAttendanceForTeam(teamId)
-            );
+            // sleep for 3 seconds, then invalidate the query
+            setTimeout(() => {
+              queryClient.invalidateQueries(
+                AttendanceQueries.getAllAttendanceForTeam(teamId)
+              );
+            }, 3000);
           }}
         >
           <SelectTrigger>
@@ -214,29 +218,4 @@ export const AttendanceColumns: ColumnDef<AttendanceResponse>[] = [
       );
     },
   },
-  // {
-  //   accessorKey: "date",
-  //   header: "Date",
-  //   cell: ({ row }) => {
-  //     const date = new Date(row.getValue("date"));
-  //     const options: Intl.DateTimeFormatOptions = {
-  //       year: "numeric",
-  //       month: "2-digit",
-  //       day: "2-digit",
-  //       // hour: "2-digit",
-  //       // minute: "2-digit",
-  //     };
-  //     const formattedDate = date.toLocaleDateString("en-US", options);
-  //     // const formattedTime = date.toLocaleTimeString("en-US", {
-  //     //   hour: "2-digit",
-  //     //   minute: "2-digit",
-  //     // });
-  //     return (
-  //       <div className="flex flex-col">
-  //         <span>{formattedDate}</span>
-  //         {/* <span>{formattedTime}</span> */}
-  //       </div>
-  //     );
-  //   },
-  // },
 ];

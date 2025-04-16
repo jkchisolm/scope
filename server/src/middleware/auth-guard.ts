@@ -1,7 +1,9 @@
 import { NextFunction, Request, Response } from "express";
 
 export const authGuard = (req: Request, res: Response, next: NextFunction) => {
+  console.log(req.cookies);
   if (req.cookies["better-auth.session_token"]) {
+    console.log("authenticated");
     // If the user is authenticated, proceed to the next middleware
     next();
   } else {

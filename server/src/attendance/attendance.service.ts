@@ -35,7 +35,7 @@ const getAttendanceForTeam = async (teamId: string, date: string) => {
       id: attendanceStatus ? attendanceStatus.id : "",
       memberId: member.id,
       date: new Date(date),
-      attended: !!attendanceStatus,
+      attended: attendanceStatus ? attendanceStatus.attended : false,
       isExcused: attendanceStatus ? attendanceStatus.isExcused : false,
       createdAt: attendanceStatus ? attendanceStatus.createdAt : new Date(),
       updatedAt: attendanceStatus ? attendanceStatus.updatedAt : new Date(),

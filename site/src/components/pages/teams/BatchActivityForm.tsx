@@ -44,6 +44,7 @@ export const BatchActivityForm = ({ teamId }: Props) => {
         headers: {
           "Content-Type": "application/json",
         },
+        credentials: "include", // Include cookies in the request
         body: JSON.stringify(body),
       }).then((res) => res.json());
     },
