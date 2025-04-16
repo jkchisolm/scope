@@ -1,3 +1,4 @@
+import { teamsService } from "#teams/teams.service.js";
 import { PrismaClient } from "../../generated/prisma";
 import { AttendanceResponse } from "../../lib/types";
 
@@ -49,6 +50,59 @@ const getAttendanceForTeam = async (teamId: string, date: string) => {
   return attendedList;
 };
 
+const getAllAttendanceForTeam = async (teamId: string) => {
+  const attendancesByDate: Record<string, AttendanceResponse[]> = {};
+
+  // Get team info
+  const team = await teamsService.getTeam(teamId);
+
+  // Create a date object from team.createdAt and set it to midnight
+  const startDate = new Date(team.createdAt);
+  startDate.setHours(0, 0, 0, 0);
+
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  const dates: Date[] = [];
+  const d = new Date(startDate);
+
+  // Loop through each day from startDate until today
+  while (d <= today) {
+    const day = d.getDay(); // Local day-of-week: 0: Sunday, 1: Monday, etc.
+    if (day === 2 || day === 4) {
+      dates.push(new Date(d));
+    }
+    d.setDate(d.getDate() + 1);
+  }
+
+  // Optionally include today if it's Tuesday or Thursday.
+  if (today.getDay() === 2 || today.getDay() === 4) {
+    dates.push(new Date(today));
+  }
+
+  // Reverse the array so that the most recent dates come first.
+  dates.reverse();
+
+  // Execute all the getAttendanceForTeam calls concurrently.
+  const results = await Promise.all(
+    dates.map(async (date) => {
+      const attendanceForDate = await getAttendanceForTeam(
+        teamId,
+        date.toISOString()
+      );
+      return { date: date.toISOString(), attendanceForDate };
+    })
+  );
+
+  // Populate the results into the object.
+  results.forEach(({ date, attendanceForDate }) => {
+    attendancesByDate[date] = attendanceForDate;
+  });
+
+  return attendancesByDate;
+};
+
 export const attendanceService = {
   getAttendanceForTeam,
+  getAllAttendanceForTeam,
 };

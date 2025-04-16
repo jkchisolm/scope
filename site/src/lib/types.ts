@@ -69,8 +69,6 @@ export type Activity = {
   participants: ActivityMember[];
 };
 
-export type Attendance = {};
-
 export type ActivityCategory = {
   id: string;
   name: string;
@@ -112,4 +110,22 @@ export interface CreateCategoryBody {
   name: string;
   description: string;
   points: number;
+}
+
+export interface AttendanceResponse {
+  id: string;
+  memberId: string;
+  date: Date;
+  attended: boolean;
+  isExcused: boolean;
+  createdAt: Date;
+  updatedAt: Date;
+  member?: {
+    memberId: string;
+    name: string;
+  };
+}
+
+export interface AttendancesByDate {
+  [date: string]: AttendanceResponse[];
 }
