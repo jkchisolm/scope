@@ -4,10 +4,10 @@ import type {
   AttendanceResponse,
   Member,
 } from "@/lib/types";
-import { SelectValue } from "@radix-ui/react-select";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import type { ColumnDef } from "@tanstack/react-table";
-import { Select, SelectContent, SelectItem, SelectTrigger } from "../ui/select";
+import { Label } from "../ui/label";
+import { RadioGroupItem, RadioGroup } from "../ui/radio-group";
 import { AttendanceQueries } from "@/lib/queries/AttendanceQueries";
 
 export const MemberColumns: ColumnDef<Member>[] = [
@@ -185,7 +185,15 @@ export const AttendanceColumns: ColumnDef<AttendanceResponse>[] = [
       const queryClient = useQueryClient();
 
       return (
-        <Select
+        <RadioGroup
+          className="flex flex-row"
+          defaultValue={
+            member.attended
+              ? "attended"
+              : member.isExcused
+              ? "excused"
+              : "notattended"
+          }
           onValueChange={(value) => {
             const teamId = member.team.id;
             const memberId = member.memberId;
@@ -206,15 +214,19 @@ export const AttendanceColumns: ColumnDef<AttendanceResponse>[] = [
             }, 3000);
           }}
         >
-          <SelectTrigger>
-            <SelectValue placeholder="Set attendance..." />
-          </SelectTrigger>
-          <SelectContent align="end">
-            <SelectItem value="attended">Attended</SelectItem>
-            <SelectItem value="excused">Excused</SelectItem>
-            <SelectItem value="notattended">Did not attend</SelectItem>
-          </SelectContent>
-        </Select>
+          <div className="flex items-center space-x-2">
+            <RadioGroupItem value="attended" id="r1" />
+            <Label htmlFor="r1">Attended</Label>
+          </div>
+          <div className="flex items-center space-x-2">
+            <RadioGroupItem value="excused" id="r2" />
+            <Label htmlFor="r2">Excused</Label>
+          </div>
+          <div className="flex items-center space-x-2">
+            <RadioGroupItem value="notattended" id="r3" />
+            <Label htmlFor="r3">Did not attend</Label>
+          </div>
+        </RadioGroup>
       );
     },
   },
