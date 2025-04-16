@@ -144,6 +144,24 @@ const setAttendance = async (
         isExcused: isExcused,
       },
     });
+
+    // if attended and isExcused are both false, then subtract 10 points from the team
+    if (!attended && !isExcused) {
+      await prisma.team.update({
+        where: { id: teamId },
+        data: {
+          points: team.points - 10,
+        },
+      });
+    } else {
+      // if attended is true or isExcused is true, then add 10 points to the team
+      await prisma.team.update({
+        where: { id: teamId },
+        data: {
+          points: team.points + 10,
+        },
+      });
+    }
   } else {
     attendance = await prisma.meetingAttendance.create({
       data: {
@@ -152,6 +170,14 @@ const setAttendance = async (
         attended: attended,
         isExcused: isExcused,
         date: new Date(date),
+      },
+    });
+
+    // add 10 points to the team
+    await prisma.team.update({
+      where: { id: teamId },
+      data: {
+        points: team.points + 10,
       },
     });
   }

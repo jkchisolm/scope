@@ -2,7 +2,14 @@ import { Activity, Team } from "../generated/prisma";
 import { DailyPoints } from "./types";
 
 export function getTeamCumulativePoints(
-  team: Team & { activities: Array<Activity> }
+  team: Team & {
+    activities: Array<Activity>;
+    meetingAttendance: Array<{
+      date: string;
+      attended: boolean;
+      isExcused: boolean;
+    }>;
+  }
 ): DailyPoints[] {
   const result: DailyPoints[] = [];
   let cumulative = 0;
@@ -23,8 +30,8 @@ export function getTeamCumulativePoints(
   ) {
     const dateStr = current.toISOString().split("T")[0] || "";
 
-    // Calculate the sum of points for activities on the current day.
-    const dailyPoints = team.activities
+    // Calculate points from activities on the current day.
+    const dailyActivityPoints = team.activities
       .filter((activity) => {
         const actDate = new Date(activity.date);
         actDate.setHours(0, 0, 0, 0);
@@ -32,6 +39,18 @@ export function getTeamCumulativePoints(
       })
       .reduce((sum, activity) => sum + activity.points, 0);
 
+    // Calculate attendance points: 10 points for each meeting where attended or isExcused is true.
+    const dailyAttendancePoints =
+      team.meetingAttendance.filter((attendance) => {
+        const attDate = new Date(attendance.date);
+        attDate.setHours(0, 0, 0, 0);
+        return (
+          attDate.getTime() === current.getTime() &&
+          (attendance.attended === true || attendance.isExcused === true)
+        );
+      }).length * 10;
+
+    const dailyPoints = dailyActivityPoints + dailyAttendancePoints;
     cumulative += dailyPoints;
     result.push({ date: dateStr, value: cumulative });
   }

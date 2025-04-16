@@ -12,10 +12,23 @@ const getAllTeams = async () => {
     },
   });
 
+  const attendance = await prisma.meetingAttendance.findMany({
+    include: {
+      Member: true,
+    },
+  });
+
   const teamsWithDailyPoints = teams.map((team) => {
     const dailyPoints = getTeamCumulativePoints({
       ...team,
       activities: team.Activity,
+      meetingAttendance: attendance
+        .filter((att) => att.teamId === team.id)
+        .map(({ date, attended, isExcused }) => ({
+          date: date.toISOString(),
+          attended,
+          isExcused,
+        })),
     });
     return {
       ...team,
@@ -43,9 +56,20 @@ const getTeam = async (teamId: string) => {
     throw new Error("Team not found");
   }
 
+  const attendance = await prisma.meetingAttendance.findMany({
+    where: {
+      teamId: teamId,
+    },
+  });
+
   const dailyPoints = getTeamCumulativePoints({
     ...team,
     activities: team.Activity,
+    meetingAttendance: attendance.map(({ date, attended, isExcused }) => ({
+      date: date.toISOString(),
+      attended,
+      isExcused,
+    })),
   });
 
   return {
