@@ -1,3 +1,5 @@
+import { DataTable } from "@/components/table/DataTable";
+import { AttendanceColumns } from "@/components/table/DataTableColumns";
 import {
   Select,
   SelectContent,
@@ -6,10 +8,9 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { AttendanceQueries } from "@/lib/queries/AttendanceQueries";
-import type { AttendanceResponse } from "@/lib/types";
 import { useQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { z } from "zod";
 
 const attendanceSearchSchema = z.object({
@@ -28,35 +29,27 @@ function RouteComponent() {
   const { teamId } = Route.useParams();
 
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
-  const [attendanceData, setAttendanceData] = useState<
-    AttendanceResponse[] | null
-  >(null);
 
   const availableDates = useMemo(() => {
     const startDate = new Date(creationDate);
-    console.log(startDate);
+    startDate.setHours(0, 0, 0, 0);
+
     const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
     const dates: Date[] = [];
     const d = new Date(startDate);
 
-    // Loop until we reach the day before today
-    while (d < today) {
-      // console.log(d);
+    // Loop until we pass today (including today)
+    while (d <= today) {
       const day = d.getDay(); // 0: Sunday, 1: Monday, 2: Tuesday, etc.
-      // console.log(day);
       if (day === 2 || day === 4) {
         dates.push(new Date(d));
       }
       d.setDate(d.getDate() + 1);
     }
 
-    // Check if today is Tuesday or Thursday
-    const todayDay = today.getDay();
-    if (todayDay === 2 || todayDay === 4) {
-      dates.push(new Date(today));
-    }
-    // Reverse the array to have the most recent date first
-
+    // Reverse to have the most recent date first.
     return dates.reverse();
   }, [creationDate]);
 
@@ -94,7 +87,7 @@ function RouteComponent() {
           </SelectContent>
         </Select>
       </div>
-      <div>
+      <div className="w-full">
         {selectedDate && (
           <div>
             <h2 className="text-2xl font-bold mt-10">
@@ -107,14 +100,21 @@ function RouteComponent() {
               })}
             </h2>
             <ul className="mt-4">
-              {attendancesByDate[selectedDate.toISOString()]?.map(
+              {
+                <DataTable
+                  columns={AttendanceColumns}
+                  data={attendancesByDate[selectedDate.toISOString()]}
+                  // pagination={false}
+                />
+              }
+              {/* {attendancesByDate[selectedDate.toISOString()]?.map(
                 (attendance) => (
                   <li key={attendance.id}>
                     {attendance.member?.name} -{" "}
                     {attendance.attended ? "Attended" : "Not Attended"}
                   </li>
                 )
-              )}
+              )} */}
             </ul>
           </div>
         )}

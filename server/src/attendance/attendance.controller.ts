@@ -19,4 +19,19 @@ attendanceController.get("/:teamId", async (req: Request, res) => {
   res.json(await attendanceService.getAllAttendanceForTeam(teamId));
 });
 
+attendanceController.post("/", async (req: Request, res) => {
+  const { teamId, memberId, attendanceStatus, date } = req.body;
+
+  // Assuming you have a function to set attendance data
+  // Replace this with your actual logic to set attendance data
+  res.json(
+    await attendanceService.setAttendance(
+      teamId,
+      memberId,
+      attendanceStatus,
+      date
+    )
+  );
+});
+
 export default attendanceController;

@@ -50,6 +50,7 @@ const getAttendanceForTeam = async (teamId: string, date: string) => {
   return attendedList;
 };
 
+// This function is stupid but it works don't question it
 const getAllAttendanceForTeam = async (teamId: string) => {
   const attendancesByDate: Record<string, AttendanceResponse[]> = {};
 
@@ -102,7 +103,64 @@ const getAllAttendanceForTeam = async (teamId: string) => {
   return attendancesByDate;
 };
 
+const setAttendance = async (
+  teamId: string,
+  memberId: string,
+  status: string,
+  date: string
+) => {
+  const team = await teamsService.getTeam(teamId);
+  const member = await prisma.member.findUnique({
+    where: { id: memberId },
+  });
+
+  // console.log(teamId);
+  // console.log(team);
+  // console.log(memberId);
+  // console.log(member);
+  if (!team || !member) {
+    throw new Error("Team or member not found");
+  }
+
+  console.log(status);
+
+  const attended = status === "attended";
+  const isExcused = status === "excused";
+  const existingAttendance = await prisma.meetingAttendance.findFirst({
+    where: {
+      memberId: memberId,
+      date: {
+        equals: new Date(date),
+      },
+    },
+  });
+
+  let attendance;
+  if (existingAttendance) {
+    attendance = await prisma.meetingAttendance.update({
+      where: { id: existingAttendance.id },
+      data: {
+        attended: attended,
+        isExcused: isExcused,
+      },
+    });
+  } else {
+    attendance = await prisma.meetingAttendance.create({
+      data: {
+        memberId: memberId,
+        teamId: teamId,
+        attended: attended,
+        isExcused: isExcused,
+        date: new Date(date),
+      },
+    });
+  }
+
+  return attendance;
+};
+
 export const attendanceService = {
   getAttendanceForTeam,
   getAllAttendanceForTeam,
+  setAttendance,
 };

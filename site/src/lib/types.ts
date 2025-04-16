@@ -124,6 +124,9 @@ export interface AttendanceResponse {
     memberId: string;
     name: string;
   };
+  team: {
+    id: string;
+  };
 }
 
 export interface AttendancesByDate {
