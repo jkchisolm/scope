@@ -1,10 +1,15 @@
 import { queryOptions } from "@tanstack/react-query";
 import type { AttendanceResponse, AttendancesByDate } from "../types";
 
-const getAttendanceForTeam = (teamId: string, date: Date, enabled: boolean) => {
+const getAttendanceForTeam = (
+  teamId: string,
+  date: Date,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  _enabled: boolean
+) => {
   return queryOptions({
     queryKey: ["attendance", teamId, date],
-    enabled,
+    // enabled,
     queryFn: async () => {
       return await fetch(
         `${

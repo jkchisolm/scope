@@ -37,7 +37,7 @@ export function DataTable<TData, TValue>({
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
+    getPaginationRowModel: (pagination && getPaginationRowModel()) || undefined,
   });
 
   return (

@@ -9,6 +9,7 @@ import type { ColumnDef } from "@tanstack/react-table";
 import { Label } from "../ui/label";
 import { RadioGroupItem, RadioGroup } from "../ui/radio-group";
 import { AttendanceQueries } from "@/lib/queries/AttendanceQueries";
+import { z } from "zod";
 
 export const MemberColumns: ColumnDef<Member>[] = [
   {
@@ -121,6 +122,10 @@ export const ActivityDashboardColumns: ColumnDef<Activity>[] = [
   },
 ];
 
+const attendanceFormSchema = z.object({
+  attendanceStatus: z.enum(["attended", "excused", "notattended"]),
+});
+
 export const AttendanceColumns: ColumnDef<AttendanceResponse>[] = [
   {
     accessorKey: "member.name",
@@ -206,12 +211,17 @@ export const AttendanceColumns: ColumnDef<AttendanceResponse>[] = [
               date: member.date as unknown as string,
             });
 
-            // sleep for 3 seconds, then invalidate the query
+            console.log("here");
+            console.log(queryClient);
+            // queryClient.refetchQueries();
+            // queryClient.refetchQueries(
+            //   AttendanceQueries.getAttendanceForTeam(teamId, member.date, false)
+            // );
+
+            // // sleep for 3 seconds, then invalidate the query
             setTimeout(() => {
-              queryClient.invalidateQueries(
-                AttendanceQueries.getAllAttendanceForTeam(teamId)
-              );
-            }, 3000);
+              queryClient.refetchQueries({ stale: true });
+            }, 1000);
           }}
         >
           <div className="flex items-center space-x-2">

@@ -96,7 +96,7 @@ function RouteComponent() {
             setFetchAttendances(true);
             setTimeout(() => {
               setFetchAttendances(false);
-            }, 3000);
+            }, 1500);
           }}
         >
           <SelectTrigger className="w-[180px]">
@@ -124,11 +124,11 @@ function RouteComponent() {
               })}
             </h2>
             <ul className="mt-4">
-              {attendances ? (
+              {attendances && !fetchAttendances ? (
                 <DataTable
                   columns={AttendanceColumns}
                   data={attendances!}
-                  // pagination={false}
+                  pagination={false}
                 />
               ) : (
                 <div className="text-gray-500">Loading...</div>
