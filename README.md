@@ -16,7 +16,7 @@ A simple web app for managing and tracking Scope Cup progress. Made for my own i
 
 ## To-Do/Checklist
 
-<details open>
+<details>
 <summary>✅ Completed</summary>
 <ul>
   <li>
@@ -30,7 +30,7 @@ A simple web app for managing and tracking Scope Cup progress. Made for my own i
 </ul>
 </details>
 
-<details open>
+<details>
 <summary>⌛ In progress</summary>
 <ul>
 <li>Editing rules (updating point values, deleting, etc)</li>
@@ -41,7 +41,7 @@ A simple web app for managing and tracking Scope Cup progress. Made for my own i
 </ul>
 </details>
 
-<details open>
+<details>
 <summary>✋ Backlog</summary>
 <ul>
 <li>Team draft manager</li>
