@@ -7,9 +7,8 @@ import type {
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import type { ColumnDef } from "@tanstack/react-table";
 import { Label } from "../ui/label";
-import { RadioGroupItem, RadioGroup } from "../ui/radio-group";
-import { AttendanceQueries } from "@/lib/queries/AttendanceQueries";
-import { z } from "zod";
+import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
+import { toast } from "sonner";
 
 export const MemberColumns: ColumnDef<Member>[] = [
   {
@@ -122,10 +121,6 @@ export const ActivityDashboardColumns: ColumnDef<Activity>[] = [
   },
 ];
 
-const attendanceFormSchema = z.object({
-  attendanceStatus: z.enum(["attended", "excused", "notattended"]),
-});
-
 export const AttendanceColumns: ColumnDef<AttendanceResponse>[] = [
   {
     accessorKey: "member.name",
@@ -155,8 +150,9 @@ export const AttendanceColumns: ColumnDef<AttendanceResponse>[] = [
     id: "options",
     cell: ({ row }) => {
       const member = row.original;
+      const queryClient = useQueryClient();
 
-      const setAttendance = useMutation({
+      const { mutateAsync: setAttendance } = useMutation({
         mutationFn: async ({
           teamId,
           memberId,
@@ -185,9 +181,10 @@ export const AttendanceColumns: ColumnDef<AttendanceResponse>[] = [
             }
           );
         },
+        onSuccess: () => {
+          queryClient.refetchQueries({ stale: true });
+        },
       });
-
-      const queryClient = useQueryClient();
 
       return (
         <RadioGroup
@@ -203,25 +200,23 @@ export const AttendanceColumns: ColumnDef<AttendanceResponse>[] = [
             const teamId = member.team.id;
             const memberId = member.memberId;
             console.log(typeof member.date);
-            // member.date.setHours(0, 0, 0, 0);
-            setAttendance.mutate({
-              teamId,
-              memberId,
-              attendanceStatus: value,
-              date: member.date as unknown as string,
-            });
 
-            console.log("here");
-            console.log(queryClient);
-            // queryClient.refetchQueries();
-            // queryClient.refetchQueries(
-            //   AttendanceQueries.getAttendanceForTeam(teamId, member.date, false)
-            // );
-
-            // // sleep for 3 seconds, then invalidate the query
-            setTimeout(() => {
-              queryClient.refetchQueries({ stale: true });
-            }, 1000);
+            toast.promise(
+              setAttendance({
+                teamId,
+                memberId,
+                attendanceStatus: value,
+                date: member.date as unknown as string,
+              }),
+              {
+                loading: "Updating attendance...",
+                success: "Attendance updated!",
+                error: (err) => {
+                  console.error(err);
+                  return "Error updating attendance";
+                },
+              }
+            );
           }}
         >
           <div className="flex items-center space-x-2">
