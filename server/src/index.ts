@@ -7,7 +7,7 @@ import userController from "#user/user.controller.js";
 // import audit from "express-requests-logger";
 // import bunyan from "bunyan";
 import teamsController from "#teams/teams.controller.js";
-import categoriesController from "#categories/categories.controller.js";
+import rulesController from "#rules/rules.controller.js";
 import activitiesController from "#activities/activities.controller.js";
 import { authGuard } from "#middleware/auth-guard.js";
 import cookieParser from "cookie-parser";
@@ -44,7 +44,7 @@ app.use(cookieParser());
 
 app.use("/api/user", authGuard, userController);
 app.use("/api/teams", authGuard, teamsController);
-app.use("/api/categories", authGuard, categoriesController);
+app.use("/api/rules", authGuard, rulesController);
 app.use("/api/activities", authGuard, activitiesController);
 app.use("/api/attendance", authGuard, attendanceController);
 

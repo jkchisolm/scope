@@ -64,12 +64,12 @@ export type Activity = {
   updatedAt: Date;
   team: Team;
   teamId: string;
-  category: ActivityCategory;
+  category: Rule;
   categoryId: string;
   participants: ActivityMember[];
 };
 
-export type ActivityCategory = {
+export type Rule = {
   id: string;
   name: string;
   description: string;
@@ -106,7 +106,7 @@ export interface CreateBatchActivityBody {
   list: CreateActivityBody[];
 }
 
-export interface CreateCategoryBody {
+export interface CreateRuleBody {
   name: string;
   description: string;
   points: number;

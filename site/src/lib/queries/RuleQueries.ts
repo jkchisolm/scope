@@ -1,19 +1,19 @@
 import { queryOptions } from "@tanstack/react-query";
-import { type ActivityCategory } from "@/lib/types";
+import { type Rule as Rule } from "@/lib/types";
 
-const getCategories = queryOptions<ActivityCategory[], unknown>({
+const getRules = queryOptions<Rule[], unknown>({
   queryKey: ["getCategories"],
   queryFn: async () => {
-    return await fetch(`${import.meta.env.VITE_SERVER_URL}/api/categories`, {
+    return await fetch(`${import.meta.env.VITE_SERVER_URL}/api/rules`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
       },
       credentials: "include", // Include cookies in the request
-    }).then((res) => res.json() as unknown as ActivityCategory[]);
+    }).then((res) => res.json() as unknown as Rule[]);
   },
 });
 
 export const CategoryQueries = {
-  getCategories,
+  getCategories: getRules,
 };

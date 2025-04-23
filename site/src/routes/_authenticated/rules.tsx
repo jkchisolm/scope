@@ -1,6 +1,6 @@
 import { DataTable } from "@/components/table/DataTable";
 import { CategoryColumns } from "@/components/table/DataTableColumns";
-import { CategoryQueries } from "@/lib/queries/CategoryQueries";
+import { CategoryQueries } from "@/lib/queries/RuleQueries";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 

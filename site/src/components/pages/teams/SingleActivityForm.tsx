@@ -1,4 +1,4 @@
-import { CategoryQueries } from "@/lib/queries/CategoryQueries";
+import { CategoryQueries } from "@/lib/queries/RuleQueries";
 import { cn } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";

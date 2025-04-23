@@ -2,7 +2,7 @@ import { PrismaClient } from "../../generated/prisma";
 
 const prisma = new PrismaClient();
 
-const getCategories = async () => {
+const getRules = async () => {
   return await prisma.activityCategory.findMany({
     include: {
       Activity: true,
@@ -10,6 +10,6 @@ const getCategories = async () => {
   });
 };
 
-export const categoriesService = {
-  getCategories,
+export const rulesService = {
+  getRules,
 };

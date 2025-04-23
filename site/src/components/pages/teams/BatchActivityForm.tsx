@@ -1,9 +1,9 @@
-import { CategoryQueries } from "@/lib/queries/CategoryQueries";
+import { CategoryQueries } from "@/lib/queries/RuleQueries";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Link } from "@tanstack/react-router";
 import type {
-  ActivityCategory,
+  Rule,
   CreateActivityBody,
   CreateBatchActivityBody,
 } from "@/lib/types";
@@ -53,7 +53,7 @@ export const BatchActivityForm = ({ teamId }: Props) => {
   const { data } = useQuery(CategoryQueries.getCategories);
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    const categories = data as ActivityCategory[];
+    const categories = data as Rule[];
     console.log(categories);
 
     console.log(values);

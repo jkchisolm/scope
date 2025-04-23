@@ -1,9 +1,4 @@
-import type {
-  Activity,
-  ActivityCategory,
-  AttendanceResponse,
-  Member,
-} from "@/lib/types";
+import type { Activity, Rule, AttendanceResponse, Member } from "@/lib/types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import type { ColumnDef } from "@tanstack/react-table";
 import { Label } from "../ui/label";
@@ -53,7 +48,7 @@ export const ActivityColumns: ColumnDef<Activity>[] = [
   },
 ];
 
-export const CategoryColumns: ColumnDef<ActivityCategory>[] = [
+export const CategoryColumns: ColumnDef<Rule>[] = [
   {
     accessorKey: "name",
     header: "Name",
