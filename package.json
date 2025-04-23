@@ -1,0 +1,12 @@
+{
+  "name": "Scope monorepo",
+  "version": "0.1.0",
+  "private": true,
+  "packageManager": "pnpm@10.9.0",
+  "scripts": {
+    "dev": "turbo run dev"
+  },
+  "devDependencies": {
+    "turbo": "^2.5.1"
+  }
+}
