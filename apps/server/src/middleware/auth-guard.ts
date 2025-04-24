@@ -1,4 +1,4 @@
-import { NextFunction, Request, Response } from "express";
+import type { NextFunction, Request, Response } from "express";
 
 export const authGuard = (req: Request, res: Response, next: NextFunction) => {
   console.log(req.cookies);

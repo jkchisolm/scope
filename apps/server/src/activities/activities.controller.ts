@@ -6,7 +6,7 @@ const activitiesController: express.Router = express.Router();
 /**
  * Get activites, sorted by date
  */
-activitiesController.get("/", async (req, res) => {
+activitiesController.get("/", async (_req, res) => {
   const activities = await activityService.getActivities();
   res.json(activities);
 });

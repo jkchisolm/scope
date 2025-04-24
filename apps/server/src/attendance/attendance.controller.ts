@@ -1,4 +1,4 @@
-import express, { Request } from "express";
+import express, { type Request } from "express";
 import { attendanceService } from "./attendance.service";
 
 const attendanceController: express.Router = express.Router();

@@ -1,4 +1,4 @@
-import express, { Request, Response } from "express";
+import express, { type Request, type Response } from "express";
 import { getCurrentUser } from "./user.service";
 
 const userController: express.Router = express.Router();

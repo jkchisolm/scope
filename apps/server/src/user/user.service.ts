@@ -1,6 +1,6 @@
 import { fromNodeHeaders } from "better-auth/node";
 import { auth } from "../../lib/auth";
-import { Request } from "express";
+import type { Request } from "express";
 
 const getCurrentUser = async (req: Request) => {
   // console.log(req.headers);

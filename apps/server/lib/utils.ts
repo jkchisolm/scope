@@ -1,5 +1,5 @@
-import { Activity, Team } from "@prisma/client";
-import { DailyPoints } from "@workspace/shared";
+import type { Activity, Team } from "@prisma/client";
+import { type DailyPoints } from "@workspace/shared";
 
 export function getTeamCumulativePoints(
   team: Team & {

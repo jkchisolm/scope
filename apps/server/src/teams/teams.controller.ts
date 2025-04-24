@@ -4,7 +4,7 @@ import { teamsService } from "./teams.service";
 const teamsController: express.Router = express.Router();
 
 // Full list of teams, for the overview chart.
-teamsController.get("/all", async (req, res) => {
+teamsController.get("/all", async (_req, res) => {
   res.json(await teamsService.getAllTeams());
 });
 
