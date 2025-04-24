@@ -12,7 +12,8 @@ A simple web app for managing and tracking Scope Cup progress. Made for my own i
 
 - Clone the repo
 - You'll need to add your own environment variables for API keys & stuff like that. Follow the `.env.example` in both the `server` & `site` directories (found under the `apps` directory). **Don't start the app before doing this!**
-- Start the app by running `pnpm dev` at the top level! Alternatively, run the server by going into `apps/server` and running `pnpm dev`, or start the website by going into `apps/site` and running `pnpm dev`
+- **Development Mode** Start the app by running `pnpm dev` at the top level! Alternatively, run the server by going into `apps/server` and running `pnpm dev`, or start the website by going into `apps/site` and running `pnpm dev`
+- **Production Mode** Start the app by running `pnpm start` at the top level! Alternatively, run the server by going into `apps/server` and running `pnpm start`, or start the website by going into `apps/site` and running `pnpm start`
 
 ## To-Do/Checklist
 
