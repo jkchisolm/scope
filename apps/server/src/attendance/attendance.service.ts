@@ -1,5 +1,5 @@
-import { teamsService } from "#teams/teams.service.js";
-import { PrismaClient } from "../../generated/prisma";
+import { teamsService } from "../teams/teams.service.js";
+import { PrismaClient } from "@prisma/client";
 import { AttendanceResponse } from "../../lib/types";
 
 const prisma = new PrismaClient();

@@ -1,4 +1,4 @@
-import { PrismaClient } from "../../generated/prisma";
+import { PrismaClient } from "@prisma/client";
 import { CreateTeamInput } from "../../lib/types";
 import { getTeamCumulativePoints } from "../../lib/utils";
 
