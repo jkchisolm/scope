@@ -1,5 +1,5 @@
 import { queryOptions } from "@tanstack/react-query";
-import { type Rule as Rule } from "@/lib/types";
+import { type Rule as Rule } from "@workspace/shared";
 
 const getRules = queryOptions<Rule[], unknown>({
   queryKey: ["getCategories"],

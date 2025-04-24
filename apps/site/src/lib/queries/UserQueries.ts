@@ -1,5 +1,5 @@
 import { queryOptions } from "@tanstack/react-query";
-import type { UserSession } from "../types/UserTypes";
+import type { UserSession } from "@workspace/shared";
 
 const getCurrentUser = queryOptions({
   queryKey: ["currentUser"],

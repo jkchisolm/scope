@@ -6,7 +6,7 @@ import type {
   Rule,
   CreateActivityBody,
   CreateBatchActivityBody,
-} from "@/lib/types";
+} from "@workspace/shared";
 import { Button } from "@/components/ui/button";
 import {
   Form,

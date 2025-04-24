@@ -5,7 +5,7 @@ import TeamCards from "@/components/pages/dashboard/TeamCards";
 import type { ChartConfig } from "@/components/ui/chart";
 import { ActivityQueries } from "@/lib/queries/ActivityQueries";
 import { TeamQueries } from "@/lib/queries/TeamQueries";
-import type { Team } from "@/lib/types";
+import type { Team } from "@workspace/shared";
 import { getDailyCombinedPoints } from "@/lib/utils";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";

@@ -6,7 +6,7 @@ import {
   CardDescription,
 } from "@/components/ui/card";
 import { TeamQueries } from "@/lib/queries/TeamQueries";
-import type { Team } from "@/lib/types";
+import type { Team } from "@workspace/shared";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute, useRouter } from "@tanstack/react-router";
 

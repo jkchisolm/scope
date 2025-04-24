@@ -1,5 +1,5 @@
 import { queryOptions } from "@tanstack/react-query";
-import type { Team } from "../types";
+import type { Team } from "@workspace/shared";
 
 const getAllTeams = queryOptions({
   queryKey: ["allTeams"],

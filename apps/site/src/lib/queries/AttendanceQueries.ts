@@ -1,5 +1,5 @@
 import { queryOptions } from "@tanstack/react-query";
-import type { AttendanceResponse, AttendancesByDate } from "../types";
+import type { AttendanceResponse, AttendancesByDate } from "@workspace/shared";
 
 const getAttendanceForTeam = (
   teamId: string,

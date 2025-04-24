@@ -1,4 +1,4 @@
-import type { UserSession } from "@/lib/types/UserTypes";
+import type { UserSession } from "@workspace/shared";
 import { createContext, useState } from "react";
 
 export type AuthenticatedContextType = {

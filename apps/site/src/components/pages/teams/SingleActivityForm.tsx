@@ -2,7 +2,7 @@ import { CategoryQueries } from "@/lib/queries/RuleQueries";
 import { cn } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { type CreateActivityBody } from "@/lib/types";
+import { type CreateActivityBody } from "@workspace/shared";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import {

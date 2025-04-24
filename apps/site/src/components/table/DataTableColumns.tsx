@@ -1,4 +1,9 @@
-import type { Activity, Rule, AttendanceResponse, Member } from "@/lib/types";
+import type {
+  Activity,
+  Rule,
+  AttendanceResponse,
+  Member,
+} from "@workspace/shared";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import type { ColumnDef } from "@tanstack/react-table";
 import { Label } from "../ui/label";

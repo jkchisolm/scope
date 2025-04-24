@@ -1,5 +1,5 @@
 import { queryOptions } from "@tanstack/react-query";
-import type { Activity } from "../types";
+import type { Activity } from "@workspace/shared";
 
 const getActivites = queryOptions({
   queryKey: ["getActivities"],
