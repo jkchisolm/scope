@@ -1,5 +1,5 @@
 import { PrismaClient } from "@prisma/client";
-import { CreateTeamInput } from "../../lib/types";
+import { CreateTeamInput } from "@workspace/shared";
 import { getTeamCumulativePoints } from "../../lib/utils";
 
 const prisma = new PrismaClient();

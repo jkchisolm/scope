@@ -1,5 +1,5 @@
 import { PrismaClient } from "@prisma/client";
-import { CreateActivityBody, CreateBatchActivityBody } from "../../lib/types";
+import { CreateActivityBody, CreateBatchActivityBody } from "@workspace/shared";
 
 const prisma = new PrismaClient();
 
