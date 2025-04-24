@@ -1,0 +1,17 @@
+{
+  "name": "@workspace/shared",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.ts",
+  "types": "index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "dependencies": {
+    "@workspace/typescript-config": "workspace:*"
+  },
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@10.9.0"
+}
