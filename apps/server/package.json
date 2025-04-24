@@ -14,9 +14,6 @@
     "format:check": "prettier --check .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "imports": {
-    "#*": "./src/*"
-  },
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -29,7 +26,8 @@
     "cors": "^2.8.5",
     "express": "^5.1.0",
     "express-requests-logger": "^4.0.2",
-    "winston": "^3.17.0"
+    "winston": "^3.17.0",
+    "@workspace/typescript-config": "workspace:*"
   },
   "devDependencies": {
     "@eslint/js": "^9.24.0",

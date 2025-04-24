@@ -1,7 +1,7 @@
-import express from "express";
+import * as express from "express";
 import { activityService } from "./activities.service";
 
-const activitiesController = express.Router();
+const activitiesController: express.Router = express.Router();
 
 /**
  * Get activites, sorted by date

@@ -1,7 +1,7 @@
 import express from "express";
 import { teamsService } from "./teams.service";
 
-const teamsController = express.Router();
+const teamsController: express.Router = express.Router();
 
 // Full list of teams, for the overview chart.
 teamsController.get("/all", async (req, res) => {

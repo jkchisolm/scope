@@ -1,7 +1,7 @@
 import express, { Request, Response } from "express";
 import { getCurrentUser } from "./user.service";
 
-const userController = express.Router();
+const userController: express.Router = express.Router();
 
 userController.get(
   "/me",

@@ -1,7 +1,7 @@
 import express, { Request } from "express";
 import { attendanceService } from "./attendance.service";
 
-const attendanceController = express.Router();
+const attendanceController: express.Router = express.Router();
 
 attendanceController.get("/:teamId&date=:date", async (req: Request, res) => {
   const { teamId, date } = req.params;
