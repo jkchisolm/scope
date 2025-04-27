@@ -1,7 +1,7 @@
 import { toNodeHandler } from "better-auth/node";
 import express from "express";
 import cors from "cors";
-import { auth } from "../lib/auth";
+import { auth } from "./lib/auth";
 import userController from "./user/user.controller.js";
 import teamsController from "./teams/teams.controller.js";
 import rulesController from "./rules/rules.controller.js";

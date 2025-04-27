@@ -3,6 +3,8 @@
   "compilerOptions": {
     "outDir": "./dist",
     "rootDir": "./"
+    // "noEmit": false,
+    // "allowImportingTsExtensions": false
   },
   "include": ["**/*.ts"],
   "exclude": ["dist"]

@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "dev": "concurrently \"pnpm dlx prisma studio\" \"tsx --watch --env-file .env src/index.ts\"",
-    "start": "node --env-file .env dist/src/index.js",
-    "build": "pnpm dlx prisma generate && ls ./node_modules/.prisma && tsc",
+    "start": "ts-node src/index.ts",
+    "build": "pnpm dlx prisma generate && ls ./node_modules/.prisma && pnpm exec tsc",
     "type-check": "tsc --noEmit",
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
@@ -20,15 +20,16 @@
   "dependencies": {
     "@prisma/client": "6.5.0",
     "@types/cors": "^2.8.17",
+    "@workspace/shared": "workspace:*",
+    "@workspace/typescript-config": "workspace:*",
     "better-auth": "^1.2.5",
     "bunyan": "^1.8.15",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
     "express": "^5.1.0",
     "express-requests-logger": "^4.0.2",
-    "winston": "^3.17.0",
-    "@workspace/typescript-config": "workspace:*",
-    "@workspace/shared": "workspace:*"
+    "ts-node": "^10.9.2",
+    "winston": "^3.17.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.24.0",
