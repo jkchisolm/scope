@@ -1,4 +1,4 @@
-import { teamsService } from "../teams/teams.service.js";
+import { teamsService } from "../teams/teams.service";
 import { PrismaClient } from "../../generated/client";
 import { type AttendanceResponse } from "@workspace/shared";
 
