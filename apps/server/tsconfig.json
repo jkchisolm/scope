@@ -2,7 +2,11 @@
   "extends": "@workspace/typescript-config/base.json",
   "compilerOptions": {
     "outDir": "./dist",
-    "rootDir": "./"
+    "rootDir": "./",
+    "module": "NodeNext",
+    "moduleResolution": "nodenext",
+    "allowSyntheticDefaultImports": true,
+    "verbatimModuleSyntax": false
     // "noEmit": false,
     // "allowImportingTsExtensions": false
   },
