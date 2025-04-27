@@ -11,7 +11,7 @@ import cookieParser from "cookie-parser";
 import attendanceController from "./attendance/attendance.controller";
 
 const app = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3001;
 
 app.use(
   cors({
