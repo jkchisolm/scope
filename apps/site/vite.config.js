@@ -4,6 +4,7 @@ import tailwindcss from "@tailwindcss/vite";
 
 import { TanStackRouterVite } from "@tanstack/router-plugin/vite";
 import { resolve } from "node:path";
+import { preview } from "vite";
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -17,11 +18,14 @@ export default defineConfig({
     environment: "jsdom",
   },
   server: {
-    port: 3001,
+    port: 3000,
   },
   resolve: {
     alias: {
       "@": resolve(__dirname, "./src"),
     },
+  },
+  preview: {
+    allowedHosts: ["scope.jkchisolm.com"],
   },
 });
