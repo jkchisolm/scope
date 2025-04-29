@@ -1,5 +1,6 @@
 import type { Route } from "./+types/home";
 import { Welcome } from "../welcome/welcome";
+import { GoogleLogin } from "@react-oauth/google";
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -9,5 +10,14 @@ export function meta({}: Route.MetaArgs) {
 }
 
 export default function Home() {
-  return <Welcome />;
+  return (
+    <div className="flex flex-col justify-center items-center h-screen">
+      <h1 className="text-7xl">
+        <span className="font-bold text-purple-500">Scopey</span> scope
+      </h1>
+      <div className="mt-10">
+        <GoogleLogin onSuccess={() => {}} />
+      </div>
+    </div>
+  );
 }
