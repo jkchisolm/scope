@@ -2,7 +2,7 @@
   "extends": "@workspace/typescript-config/base.json",
   "include": ["**/*.ts", "**/*.tsx"],
   "compilerOptions": {
-    "types": ["vite/client"],
+    "types": ["vite/client", "node"],
 
     "moduleResolution": "bundler",
     "noEmit": true,

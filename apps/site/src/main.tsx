@@ -37,7 +37,7 @@ if (rootElement && !rootElement.innerHTML) {
   const root = ReactDOM.createRoot(rootElement);
   root.render(
     <StrictMode>
-      <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
+      <GoogleOAuthProvider clientId={process.env.VITE_GOOGLE_CLIENT_ID!}>
         <QueryClientProvider client={queryClient}>
           <AuthenticatedProvider>
             <RouterProvider router={router} context={{ queryClient }} />
