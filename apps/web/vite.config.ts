@@ -7,11 +7,11 @@ export default defineConfig(({ command, mode }) => {
   const env = loadEnv(mode, process.cwd(), "");
 
   return {
-    define: {
-      "import.meta.env.VITE_SERVER_URL": process.env.VITE_SERVER_URL,
-      "import.meta.env.VITE_GOOGLE_CLIENT_ID":
-        process.env.VITE_GOOGLE_CLIENT_ID,
-    },
+    // define: {
+    //   "import.meta.env.VITE_SERVER_URL": process.env.VITE_SERVER_URL,
+    //   "import.meta.env.VITE_GOOGLE_CLIENT_ID":
+    //     process.env.VITE_GOOGLE_CLIENT_ID,
+    // },
     plugins: [tailwindcss(), reactRouter(), tsconfigPaths()],
   };
 });
