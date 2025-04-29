@@ -22,6 +22,7 @@ export const auth = betterAuth({
     },
   },
   trustedOrigins: [
-    "http://localhost:3001", // Local development front end origin
+    "http://localhost:3001",
+    "http://localhost:5173", // Local development front end origin
   ],
 });
