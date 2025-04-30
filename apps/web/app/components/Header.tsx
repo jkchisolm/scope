@@ -49,7 +49,7 @@ export default function Header() {
         <img
           src={
             new URL(
-              "../../public/infinity-logo-sash-embroidered.png",
+              "../../../public/infinity-logo-sash-embroidered.png",
               import.meta.url
             ).href
           }

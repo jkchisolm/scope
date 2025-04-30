@@ -1,19 +1,20 @@
-import { TeamQueries } from "~/lib/queries/TeamQueries";
-import { queryClient } from "~/root";
-import type { Route } from "./+types/dashboard";
+import { QueryClient, useQueryClient } from "@tanstack/react-query";
 import type { Activity, Team } from "@workspace/shared";
+import { useLoaderData } from "react-router";
 import { OverviewChart } from "~/components/pages/dashboard/OverviewChart";
 import TeamCards from "~/components/pages/dashboard/TeamCards";
 import { DataTable } from "~/components/table/DataTable";
 import { ActivityDashboardColumns } from "~/components/table/DataTableColumns";
 import type { ChartConfig } from "~/components/ui/chart";
-import { getDailyCombinedPoints } from "~/lib/utils";
 import { ActivityQueries } from "~/lib/queries/ActivityQueries";
+import { TeamQueries } from "~/lib/queries/TeamQueries";
+import { getDailyCombinedPoints } from "~/lib/utils";
 
 export async function clientLoader(): Promise<{
   teams: Team[];
   activities: Activity[];
 }> {
+  const queryClient = new QueryClient();
   const teams = await queryClient.ensureQueryData(TeamQueries.getAllTeams);
   const activities = await queryClient.ensureQueryData(
     ActivityQueries.getActivites
@@ -21,11 +22,8 @@ export async function clientLoader(): Promise<{
   return { teams, activities };
 }
 
-export default function Dashboard({ loaderData }: Route.ComponentProps) {
-  const { teams, activities } = loaderData as unknown as {
-    teams: Team[];
-    activities: Team[];
-  };
+export default function Dashboard() {
+  const { teams, activities } = useLoaderData<typeof clientLoader>();
   console.log(teams);
 
   // get the dailyPoints array from each team and store in an array
