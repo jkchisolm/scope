@@ -12,7 +12,16 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import AuthenticatedProvider from "./contexts/AuthenticatedContext.tsx";
 
 // Create a new React Query instance
-const queryClient = new QueryClient();
+export const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: true,
+      retry: 2,
+      retryDelay: 2000,
+      staleTime: 1000 * 60 * 5,
+    },
+  },
+});
 
 // Create a new router instance
 const router = createRouter({
