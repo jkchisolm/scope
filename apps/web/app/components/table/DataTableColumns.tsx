@@ -182,7 +182,7 @@ export const AttendanceColumns: ColumnDef<AttendanceResponse>[] = [
           );
         },
         onSuccess: () => {
-          queryClient.refetchQueries({ stale: true });
+          queryClient.refetchQueries();
         },
       });
 

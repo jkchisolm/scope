@@ -13,6 +13,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import { useState } from "react";
+import { Toaster } from "sonner";
 
 // export const queryClient = new QueryClient();
 
@@ -60,6 +61,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
             {children}
             <ScrollRestoration />
             <Scripts />
+            <Toaster />
           </GoogleOAuthProvider>
         </QueryClientProvider>
       </body>
