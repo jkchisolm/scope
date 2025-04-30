@@ -5,8 +5,8 @@
   "packageManager": "pnpm@10.9.0",
   "scripts": {
     "dev": "turbo run dev",
-    "build": "turbo run build --env-mode loose",
-    "start": "turbo run start --env-mode loose"
+    "build": "turbo run build --env-mode=loose",
+    "start": "turbo run start --env-mode=loose"
   },
   "devDependencies": {
     "turbo": "^2.5.1"
