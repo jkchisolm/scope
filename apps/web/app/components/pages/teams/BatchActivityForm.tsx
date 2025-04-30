@@ -1,13 +1,12 @@
-import { CategoryQueries } from "@/lib/queries/RuleQueries";
+import { CategoryQueries } from "~/lib/queries/RuleQueries";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { Link } from "@tanstack/react-router";
 import type {
   Rule,
   CreateActivityBody,
   CreateBatchActivityBody,
 } from "@workspace/shared";
-import { Button } from "@/components/ui/button";
+import { Button } from "~/components/ui/button";
 import {
   Form,
   FormControl,
@@ -15,12 +14,13 @@ import {
   FormField,
   FormItem,
   FormLabel,
-} from "@/components/ui/form";
-import { Textarea } from "@/components/ui/textarea";
+} from "~/components/ui/form";
+import { Textarea } from "~/components/ui/textarea";
 import { useForm } from "react-hook-form";
 import z from "zod";
-import { TeamQueries } from "@/lib/queries/TeamQueries";
+import { TeamQueries } from "~/lib/queries/TeamQueries";
 import { toast } from "sonner";
+import { href, Link } from "react-router";
 
 const formSchema = z.object({
   list: z.string({ required_error: "Enter a batch!" }).nonempty(),
@@ -124,7 +124,7 @@ export const BatchActivityForm = ({ teamId }: Props) => {
                 </strong>{" "}
                 For the name, the name should match *exactly* with what's in the
                 "Name" column on the{" "}
-                <Link to="/rules" className="text-blue-500">
+                <Link to={href("/rules")} className="text-blue-500">
                   rules
                 </Link>{" "}
                 page.{" "}

@@ -3,7 +3,7 @@ import type { Team } from "@workspace/shared";
 
 const getAllTeams = queryOptions({
   queryKey: ["allTeams"],
-  queryFn: async () => {
+  queryFn: async (): Promise<Team[]> => {
     return await fetch(`${import.meta.env.VITE_SERVER_URL}/api/teams/all`, {
       method: "GET",
       headers: {
@@ -17,7 +17,7 @@ const getAllTeams = queryOptions({
 const getSingleTeam = (teamId: string) => {
   return queryOptions({
     queryKey: ["team", teamId],
-    queryFn: async () => {
+    queryFn: async (): Promise<Team> => {
       return await fetch(
         `${import.meta.env.VITE_SERVER_URL}/api/teams/${teamId}`,
         {

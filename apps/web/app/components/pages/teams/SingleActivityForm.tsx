@@ -1,34 +1,34 @@
-import { CategoryQueries } from "@/lib/queries/RuleQueries";
-import { cn } from "@/lib/utils";
+import { CategoryQueries } from "~/lib/queries/RuleQueries";
+import { cn } from "~/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { type CreateActivityBody } from "@workspace/shared";
-import { Button } from "@/components/ui/button";
-import { Calendar } from "@/components/ui/calendar";
+import { Button } from "~/components/ui/button";
+import { Calendar } from "~/components/ui/calendar";
 import {
   Form,
   FormControl,
   FormField,
   FormItem,
   FormLabel,
-} from "@/components/ui/form";
+} from "~/components/ui/form";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/components/ui/popover";
+} from "~/components/ui/popover";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
+} from "~/components/ui/select";
 import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
 import { useForm } from "react-hook-form";
 import z from "zod";
-import { TeamQueries } from "@/lib/queries/TeamQueries";
+import { TeamQueries } from "~/lib/queries/TeamQueries";
 import { toast } from "sonner";
 
 const formSchema = z.object({

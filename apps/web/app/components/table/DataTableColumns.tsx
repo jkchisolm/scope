@@ -131,7 +131,7 @@ export const AttendanceColumns: ColumnDef<AttendanceResponse>[] = [
     header: "Attended",
     cell: ({ row }) => {
       const member = row.original;
-      console.log(member);
+      // console.log(member);
       const attended = row.getValue("attended");
       return (
         <div className="flex items-center gap-2">
@@ -199,7 +199,7 @@ export const AttendanceColumns: ColumnDef<AttendanceResponse>[] = [
           onValueChange={(value) => {
             const teamId = member.team.id;
             const memberId = member.memberId;
-            console.log(typeof member.date);
+            // console.log(typeof member.date);
 
             toast.promise(
               setAttendance({

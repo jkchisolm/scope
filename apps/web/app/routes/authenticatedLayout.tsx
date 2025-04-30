@@ -23,7 +23,7 @@ export async function clientLoader({ params }: Route.ClientLoaderArgs) {
 export default function AuthenticatedLayout({
   loaderData,
 }: Route.ComponentProps) {
-  console.log(loaderData);
+  // console.log(loaderData);
   const navigate = useNavigate();
 
   const { setUserData } = useContext(
