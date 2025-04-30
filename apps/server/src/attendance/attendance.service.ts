@@ -122,7 +122,7 @@ const setAttendance = async (
     throw new Error("Team or member not found");
   }
 
-  console.log(status);
+  // console.log(status);
 
   const attended = status === "attended";
   const isExcused = status === "excused";
