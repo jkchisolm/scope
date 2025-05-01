@@ -9,6 +9,7 @@ import activitiesController from "./activities/activities.controller";
 import { authGuard } from "./middleware/auth-guard";
 import cookieParser from "cookie-parser";
 import attendanceController from "./attendance/attendance.controller";
+import "dotenv/config";
 
 const app = express();
 const port = process.env.SERVER_PORT || 4000;
@@ -16,7 +17,7 @@ const port = process.env.SERVER_PORT || 4000;
 app.use(
   cors({
     origin: [
-      "http://localhost:3001",
+      "http://localhost:3000",
       "http://localhost:5173",
       "https://scope.jkchisolm.com",
     ], // Replace with your frontend's origin

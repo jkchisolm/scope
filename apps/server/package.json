@@ -26,6 +26,7 @@
     "bunyan": "^1.8.15",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
+    "dotenv": "^16.5.0",
     "express": "^5.1.0",
     "express-requests-logger": "^4.0.2",
     "ts-node": "^10.9.2",
