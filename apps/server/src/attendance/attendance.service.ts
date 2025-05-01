@@ -1,5 +1,5 @@
 import { teamsService } from "../teams/teams.service";
-import { PrismaClient } from "../../generated/client";
+import { PrismaClient } from "../generated/prisma/client";
 import { type AttendanceResponse } from "@workspace/shared";
 
 const prisma = new PrismaClient();
