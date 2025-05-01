@@ -3,3 +3,6 @@ cmds = ['turbo run build --env-mode=loose']
 
 [start]
 cmd = 'turbo run start --env-mode=loose'
+
+[variables]
+NIXPACKS_NODE_VERSION = '23' # Need to use version of node above 20 for BetterAuthCLI
