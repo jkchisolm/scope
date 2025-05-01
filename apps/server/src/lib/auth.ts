@@ -5,8 +5,6 @@ import "dotenv/config";
 
 const prisma = new PrismaClient();
 
-console.log(process.env);
-
 export const auth = betterAuth({
   database: prismaAdapter(prisma, {
     provider: "postgresql",

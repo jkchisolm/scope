@@ -1,0 +1,5 @@
+[phases.build]
+cmds = ['turbo run build --env-mode=loose']
+
+[start]
+cmd = 'turbo run start --env-mode=loose'
